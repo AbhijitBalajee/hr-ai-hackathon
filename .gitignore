@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Environment variables (NEVER commit API keys!)
 .env
 *.env
@@ -27,3 +28,11 @@ node_modules/
 
 # Logs
 *.log
+=======
+venv/
+.env
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+>>>>>>> 57ec56d5957e199ca15079b09fb748e28bc3b9d0
