@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalentFlow AI - PSA Career Navigator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <div class="gradient-bg text-white py-12 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center gap-4">
+                <div class="text-6xl">🚢</div>
+                <div>
+                    <h1 class="text-5xl font-bold">TalentFlow AI</h1>
+                    <p class="text-xl mt-2 opacity-90">Your Intelligent Career Navigator at PSA International</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Employee Selector -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8 card">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">👤 Select Employee</h2>
+            <select id="employeeSelect" class="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition">
+                <option value="">Loading employees...</option>
+            </select>
+        </div>
+
+        <!-- Current Profile -->
+        <div id="profileCard" class="bg-white rounded-xl shadow-lg p-8 mb-8 card hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">📋 Current Profile</h2>
+            <div id="profileContent" class="mb-6"></div>
+            
+            <div class="border-t pt-6">
+                <label class="block text-lg font-semibold mb-3 text-gray-700">🎯 Target Role (Optional)</label>
+                <input type="text" id="targetRole" 
+                       placeholder="e.g., Senior Cloud Architect, Port Operations Manager, CISO"
+                       class="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition mb-4">
+                
+                <button onclick="analyzeCareer()" 
+                        class="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 rounded-lg text-xl font-bold hover:from-blue-700 hover:to-cyan-700 transition shadow-lg">
+                    🤖 Generate AI Career Development Plan
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="hidden text-center py-16">
+            <div class="inline-block">
+                <div class="animate-spin rounded-full h-20 w-20 border-b-4 border-blue-600 mx-auto"></div>
+                <p class="mt-6 text-xl text-gray-600 font-semibold pulse">AI is analyzing career path...</p>
+                <p class="mt-2 text-gray-500">This may take 10-15 seconds</p>
+            </div>
+        </div>
+
+        <!-- AI Analysis Results -->
+        <div id="resultsCard" class="hidden">
+            <!-- Readiness Score -->
+            <div class="bg-gradient-to-br from-blue-500 to-cyan-500 text-white rounded-xl shadow-xl p-8 mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-2">Career Readiness Score</h2>
+                        <p id="readinessSummary" class="text-lg opacity-90"></p>
+                    </div>
+                    <div class="text-8xl font-bold" id="readinessScore"></div>
+                </div>
+            </div>
+
+            <!-- Skill Gaps -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8 card">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">🎯 Priority Skills to Develop</h2>
+                <div id="skillGaps" class="space-y-4"></div>
+            </div>
+
+            <!-- Learning Path -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8 card">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">📚 Your Personalized Learning Roadmap</h2>
+                <div id="learningPath" class="space-y-6"></div>
+            </div>
+
+            <!-- Next 30 Days -->
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">⚡ Start This Month</h2>
+                <ul id="next30Days" class="space-y-3"></ul>
+            </div>
+
+            <!-- Internal Opportunities -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8 card">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">🔍 Internal Opportunities at PSA</h2>
+                <div id="opportunities" class="space-y-3"></div>
+            </div>
+
+            <!-- Mentorship -->
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">🤝 Recommended Mentor</h2>
+                <p id="mentorshipMatch" class="text-lg text-gray-700"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-lg">🚢 Powered by AI • Built for PSA International</p>
+            <p class="text-sm opacity-75 mt-2">Empowering Future-Ready Workforce</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        let currentEmployee = null;
+
+        // Load employees on page load
+        async function loadEmployees() {
+            try {
+                const response = await fetch(`${API_URL}/employees`);
+                const employees = await response.json();
+                
+                const select = document.getElementById('employeeSelect');
+                select.innerHTML = '<option value="">Choose an employee...</option>';
+                employees.forEach(emp => {
+                    select.innerHTML += `<option value="${emp.id}">${emp.name} - ${emp.title}</option>`;
+                });
+            } catch (error) {
+                document.getElementById('employeeSelect').innerHTML = '<option>Error loading employees. Is backend running?</option>';
+                console.error(error);
+            }
+        }
+
+        // Load employee profile
+        document.getElementById('employeeSelect').addEventListener('change', async (e) => {
+            const empId = e.target.value;
+            if (!empId) {
+                document.getElementById('profileCard').classList.add('hidden');
+                document.getElementById('resultsCard').classList.add('hidden');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/employee/${empId}`);
+                currentEmployee = await response.json();
+                
+                document.getElementById('profileCard').classList.remove('hidden');
+                document.getElementById('resultsCard').classList.add('hidden');
+                
+                const yearsAtPSA = 2025 - parseInt(currentEmployee.employment_info.hire_date.split('-')[0]);
+                
+                document.getElementById('profileContent').innerHTML = `
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-gray-500 font-semibold uppercase">Current Role</p>
+                                <p class="text-xl font-bold text-gray-800">${currentEmployee.employment_info.job_title}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 font-semibold uppercase">Department</p>
+                                <p class="text-lg font-semibold text-gray-700">${currentEmployee.employment_info.department}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 font-semibold uppercase">Experience at PSA</p>
+                                <p class="text-lg font-semibold text-gray-700">${yearsAtPSA} years</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold uppercase mb-3">Top Skills</p>
+                            <div class="flex flex-wrap gap-2">
+                                ${currentEmployee.skills.slice(0, 6).map(s => 
+                                    `<span class="bg-blue-100 text-blue-800 px-3 py-2 rounded-lg text-sm font-semibold">${s.skill_name}</span>`
+                                ).join('')}
+                                ${currentEmployee.skills.length > 6 ? 
+                                    `<span class="bg-gray-100 text-gray-600 px-3 py-2 rounded-lg text-sm">+${currentEmployee.skills.length - 6} more</span>` 
+                                    : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Scroll to profile
+                document.getElementById('profileCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (error) {
+                alert('Error loading employee profile: ' + error.message);
+            }
+        });
+
+        // Analyze career
+        async function analyzeCareer() {
+            if (!currentEmployee) return;
+
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('resultsCard').classList.add('hidden');
+            document.getElementById('loading').scrollIntoView({ behavior: 'smooth' });
+
+            try {
+                const response = await fetch(`${API_URL}/analyze`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        employee_id: currentEmployee.employee_id,
+                        target_role: document.getElementById('targetRole').value
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Analysis failed');
+                }
+
+                const result = await response.json();
+                displayResults(result);
+            } catch (error) {
+                alert('Error analyzing career: ' + error.message + '\n\nMake sure your OpenAI API key is set correctly.');
+                console.error(error);
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function displayResults(data) {
+            document.getElementById('resultsCard').classList.remove('hidden');
+            
+            // Score with color coding
+            const score = data.readiness_score;
+            let scoreColor = 'text-yellow-400';
+            if (score >= 80) scoreColor = 'text-green-400';
+            else if (score < 60) scoreColor = 'text-orange-400';
+            
+            const scoreEl = document.getElementById('readinessScore');
+            scoreEl.textContent = score + '%';
+            scoreEl.className = `text-8xl font-bold ${scoreColor}`;
+            document.getElementById('readinessSummary').textContent = data.summary;
+            
+            // Skill Gaps
+            document.getElementById('skillGaps').innerHTML = data.skill_gaps.map(gap => {
+                const colors = {
+                    'High': { border: 'border-red-500', bg: 'bg-red-50', badge: 'bg-red-100 text-red-700' },
+                    'Medium': { border: 'border-yellow-500', bg: 'bg-yellow-50', badge: 'bg-yellow-100 text-yellow-700' },
+                    'Low': { border: 'border-green-500', bg: 'bg-green-50', badge: 'bg-green-100 text-green-700' }
+                };
+                const color = colors[gap.priority] || colors['Medium'];
+                
+                return `
+                    <div class="border-l-4 ${color.border} ${color.bg} p-4 rounded-r-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="font-bold text-lg text-gray-800">${gap.skill}</span>
+                            <span class="text-sm px-3 py-1 rounded-full font-semibold ${color.badge}">${gap.priority} Priority</span>
+                        </div>
+                        <p class="text-gray-700">${gap.why}</p>
+                    </div>
+                `;
+            }).join('');
+            
+            // Learning Path
+            document.getElementById('learningPath').innerHTML = data.learning_path.map(step => `
+                <div class="border-2 border-gray-200 rounded-lg p-6 hover:shadow-md transition">
+                    <div class="flex items-start gap-4 mb-3">
+                        <span class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg flex-shrink-0">${step.step}</span>
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="font-bold text-xl text-gray-800">${step.skill}</span>
+                                <span class="text-sm bg-gray-100 px-3 py-1 rounded-full font-semibold text-gray-600">${step.timeline}</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">${step.action}</p>
+                            <div class="flex flex-wrap gap-2">
+                                ${step.resources.map(r => `<span class="text-sm bg-blue-50 text-blue-700 px-3 py-1 rounded-lg font-medium">📚 ${r}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Next 30 days
+            document.getElementById('next30Days').innerHTML = data.next_30_days.map((item, i) => 
+                `<li class="flex items-start gap-3 text-lg">
+                    <span class="text-green-600 text-2xl flex-shrink-0">✓</span>
+                    <span class="text-gray-700"><strong>Week ${i+1}:</strong> ${item}</span>
+                </li>`
+            ).join('');
+            
+            // Opportunities
+            document.getElementById('opportunities').innerHTML = data.internal_opportunities.map(opp => 
+                `<div class="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                    <p class="text-gray-800 font-medium">🎯 ${opp}</p>
+                </div>`
+            ).join('');
+
+            // Mentorship
+            document.getElementById('mentorshipMatch').textContent = data.mentorship_match;
+
+            // Scroll to results
+            setTimeout(() => {
+                document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // Initialize
+        loadEmployees();
+    </script>
+</body>
+</html>
