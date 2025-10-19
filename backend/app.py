@@ -118,6 +118,101 @@ def match_skills(emp_id):
         'coverage_percentage': round(len(current_skills) / len(skills_taxonomy) * 100, 1)
     })
 
+@app.route('/api/learning-detail', methods=['POST'])
+def learning_detail():
+    """Generate detailed weekly breakdown for a specific learning step using AI"""
+    data = request.json
+    skill = data.get('skill')
+    timeline = data.get('timeline')
+    action = data.get('action')
+    resources = data.get('resources', [])
+
+    # Parse timeline to determine number of weeks
+    import re
+    timeline_match = re.search(r'(\d+)\s*(month|week)', timeline, re.IGNORECASE)
+    weeks = 4
+    if timeline_match:
+        num = int(timeline_match.group(1))
+        unit = timeline_match.group(2).lower()
+        weeks = (num * 4) if unit == 'month' else num
+
+    # Simplified prompt for detailed breakdown
+    prompt = f"""Create a detailed learning plan for developing "{skill}" skill over {weeks} weeks at PSA International.
+
+Skill: {skill}
+Timeline: {timeline}
+Learning Approach: {action}
+Resources Available: {', '.join(resources[:3])}
+
+Generate a JSON plan with:
+{{
+  "weekly_plan": [
+    {{
+      "week": 1,
+      "focus": "Specific weekly focus area",
+      "activities": ["Activity 1", "Activity 2", "Activity 3"],
+      "deliverable": "What to complete this week"
+    }}
+  ],
+  "success_metrics": [
+    "Measurable success indicator 1",
+    "Measurable success indicator 2",
+    "Measurable success indicator 3",
+    "Measurable success indicator 4"
+  ],
+  "getting_started": [
+    "First immediate action to take",
+    "Second immediate action",
+    "Third immediate action",
+    "Fourth immediate action"
+  ]
+}}
+
+Make it specific to PSA's port operations context. Return ONLY valid JSON."""
+
+    # Get API configuration
+    api_key = TEST_API_KEY if TEST_API_KEY else os.getenv('AZURE_OPENAI_KEY')
+    base_url = os.getenv('AZURE_OPENAI_ENDPOINT')
+    api_version = os.getenv('AZURE_OPENAI_API_VERSION')
+
+    if not api_key or not base_url or not api_version:
+        return jsonify({'error': 'API configuration incomplete'}), 500
+
+    api_url = f"{base_url}?api-version={api_version}"
+
+    headers = {
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": api_key,
+        "api-key": api_key
+    }
+
+    body = {
+        "messages": [{"role": "user", "content": prompt}],
+        "max_completion_tokens": 2000
+    }
+
+    try:
+        response = requests.post(api_url, headers=headers, json=body, timeout=60)
+
+        if response.status_code != 200:
+            return jsonify({'error': f'API error {response.status_code}'}), 500
+
+        result_data = response.json()
+        content = result_data['choices'][0]['message']['content']
+
+        # Extract JSON
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+
+        result = json.loads(content)
+        return jsonify(result)
+
+    except Exception as e:
+        print(f"Learning detail error: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/analyze', methods=['POST'])
 def analyze_career():
     """AI-powered career analysis using PSA's Azure OpenAI API"""
@@ -171,16 +266,17 @@ Create a JSON career plan:
     {{"skill": "Third Skill", "priority": "Low", "why": "Brief reason"}}
   ],
   "learning_path": [
-    {{"step": 1, "skill": "Priority Skill", "action": "What to do", "timeline": "3 months", "resources": ["Course/Cert 1", "Course 2"]}},
+    {{"step": 1, "skill": "Priority Skill", "action": "What to do", "timeline": "3 months", "resources": ["PSA Digital Academy: Cloud Fundamentals", "AWS Certified Solutions Architect", "LinkedIn Learning: Azure Essentials"]}},
     {{"step": 2, "skill": "Next Skill", "action": "Next action", "timeline": "2 months", "resources": ["Training", "Workshop"]}},
     {{"step": 3, "skill": "Third Skill", "action": "Follow-up", "timeline": "4 months", "resources": ["Certification"]}}
   ],
   "internal_opportunities": [
-    "Specific PSA project (e.g., Tuas Port Automation team)",
-    "Another PSA opportunity (e.g., PORTNET modernization)",
-    "Cross-functional opportunity"
+    "Tuas Port Automation - NextGen Terminal Systems (Phase 2)",
+    "PSA 2030 Digital Transformation - Cloud Migration Workstream",
+    "PORTNET 2.0 Modernization - API Integration Team",
+    "Sustainability Initiative - Green Port Technologies Program"
   ],
-  "mentorship_match": "Type of mentor to seek at PSA and why",
+  "mentorship_match": "Recommended: Senior Cloud Architect from PSA Digital Hub or Infrastructure VP with 15+ years port tech experience. Seek mentors involved in Tuas automation or cloud transformation initiatives.",
   "next_30_days": [
     "Week 1: Specific action",
     "Week 2: Another action",
@@ -304,6 +400,150 @@ Return ONLY valid JSON."""
         traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/analyze-opportunity', methods=['POST'])
+def analyze_opportunity():
+    """Generate focused learning path for a specific opportunity"""
+    data = request.json
+    emp_id = data.get('employee_id')
+    opportunity_title = data.get('opportunity_title')
+    missing_skills = data.get('missing_skills', [])
+    
+    emp = next((e for e in employees if e['employee_id'] == emp_id), None)
+    if not emp:
+        return jsonify({'error': 'Employee not found'}), 404
+    
+    # Extract employee info
+    current_skills = [s['skill_name'] for s in emp['skills']]
+    competencies = [f"{c['name']} ({c['level']})" for c in emp['competencies']]
+    years_at_psa = 2025 - int(emp['employment_info']['hire_date'][:4])
+    
+    # Build focused prompt for this specific opportunity
+    prompt = f"""You are a career advisor at PSA International. Create a FOCUSED learning plan for a specific opportunity.
+
+Employee: {emp['personal_info']['name']}
+Current Role: {emp['employment_info']['job_title']}
+Experience: {years_at_psa} years at PSA
+Current Skills: {', '.join(current_skills[:8])}
+
+TARGET OPPORTUNITY: {opportunity_title}
+
+SPECIFIC SKILLS NEEDED: {', '.join(missing_skills)}
+
+Create a SHORT, FOCUSED learning plan to acquire ONLY these missing skills for this opportunity.
+
+Respond with JSON:
+{{
+  "opportunity_title": "{opportunity_title}",
+  "readiness_assessment": "One sentence about current readiness",
+  "time_to_ready": "4-6 weeks",
+  "learning_steps": [
+    {{
+      "skill": "{missing_skills[0] if missing_skills else 'Required Skill'}",
+      "week_by_week": [
+        {{
+          "week": 1,
+          "focus": "Specific focus for week 1",
+          "activities": ["Activity 1", "Activity 2", "Activity 3"],
+          "deliverable": "Week 1 outcome"
+        }},
+        {{
+          "week": 2,
+          "focus": "Specific focus for week 2",
+          "activities": ["Activity 1", "Activity 2"],
+          "deliverable": "Week 2 outcome"
+        }}
+      ],
+      "resources": ["PSA Digital Academy: Specific Course", "Industry Certification", "Hands-on Project"],
+      "timeline": "3-4 weeks"
+    }}
+  ],
+  "quick_wins": [
+    "Immediate action 1 (This week)",
+    "Immediate action 2 (This week)",
+    "Immediate action 3 (Next week)"
+  ],
+  "success_metrics": [
+    "Measurable milestone 1",
+    "Measurable milestone 2",
+    "Ready to contribute to project"
+  ],
+  "next_step": "Specific immediate action to take today"
+}}
+
+Keep it SHORT and FOCUSED - only what's needed for THIS opportunity."""
+
+    # Get API configuration
+    api_key = TEST_API_KEY if TEST_API_KEY else os.getenv('AZURE_OPENAI_KEY')
+    base_url = os.getenv('AZURE_OPENAI_ENDPOINT')
+    api_version = os.getenv('AZURE_OPENAI_API_VERSION')
+    
+    if not api_key or not base_url or not api_version:
+        return jsonify({'error': 'API configuration incomplete'}), 500
+    
+    api_url = f"{base_url}?api-version={api_version}"
+    
+    headers = {
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": api_key,
+        "api-key": api_key
+    }
+    
+    body = {
+        "messages": [{"role": "user", "content": prompt}],
+        "max_completion_tokens": 2500
+    }
+    
+    try:
+        print(f"\n{'='*60}")
+        print(f"OPPORTUNITY-FOCUSED ANALYSIS")
+        print(f"{'='*60}")
+        print(f"Employee: {emp['personal_info']['name']}")
+        print(f"Opportunity: {opportunity_title}")
+        print(f"Missing Skills: {', '.join(missing_skills)}")
+        print(f"{'='*60}\n")
+        
+        response = requests.post(api_url, headers=headers, json=body, timeout=60)
+        
+        print(f"Response Status: {response.status_code}")
+        
+        if response.status_code != 200:
+            error_detail = response.text[:500]
+            return jsonify({'error': f'API error {response.status_code}', 'details': error_detail}), 500
+        
+        result_data = response.json()
+        
+        if 'choices' not in result_data or len(result_data['choices']) == 0:
+            return jsonify({'error': 'Invalid API response'}), 500
+        
+        choice = result_data['choices'][0]
+        content = choice.get('message', {}).get('content', '')
+        
+        if not content:
+            return jsonify({'error': 'AI returned empty response'}), 500
+        
+        # Extract JSON
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+        
+        result = json.loads(content)
+        
+        print(f"✓ Opportunity analysis completed\n")
+        
+        return jsonify(result)
+    
+    except requests.exceptions.Timeout:
+        return jsonify({'error': 'Request timeout'}), 500
+    
+    except json.JSONDecodeError as e:
+        print(f"JSON Error: {str(e)}")
+        return jsonify({'error': 'Invalid JSON from AI'}), 500
+    
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     print("\n" + "="*60)
     print("🚢 PSA TalentFlow AI Backend Starting...")
@@ -330,6 +570,6 @@ if __name__ == '__main__':
     else:
         print(f"❌ WARNING: No endpoint found!")
     
-    print(f"✓ Server running on http://127.0.0.1:5000")
+    print(f"✓ Server running on http://127.0.0.1:5001")
     print("="*60 + "\n")
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
