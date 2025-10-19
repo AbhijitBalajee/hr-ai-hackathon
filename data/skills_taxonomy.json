@@ -1,0 +1,430 @@
+[
+  {
+    "Function / Unit / Skill": "Automation and Robotics",
+    "Specialisation / Unit": "Engineering Systems"
+  },
+  {
+    "Function / Unit / Skill": "Automation and Robotics",
+    "Specialisation / Unit": "Robotic Process Automation"
+  },
+  {
+    "Function / Unit / Skill": "Business Development",
+    "Specialisation / Unit": "Business Analysis"
+  },
+  {
+    "Function / Unit / Skill": "Business Development",
+    "Specialisation / Unit": "Transactional"
+  },
+  {
+    "Function / Unit / Skill": "Commercial",
+    "Specialisation / Unit": "Account Management"
+  },
+  {
+    "Function / Unit / Skill": "Corporate Affairs",
+    "Specialisation / Unit": "Public Relations Management"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Data Engineering",
+    "Specialisation / Unit": "Data Model Architecture"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Data Engineering",
+    "Specialisation / Unit": "Data Model Design"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Data Science",
+    "Specialisation / Unit": "Data Understanding & Preparation"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Data Science",
+    "Specialisation / Unit": "Data Visualisation"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Data Science",
+    "Specialisation / Unit": "Descriptive / Diagnostics Analytics"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Data Science",
+    "Specialisation / Unit": "Machine Learning & AI"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Data Science",
+    "Specialisation / Unit": "Predictive / Prescriptive Analytics"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Data Strategy & Management",
+    "Specialisation / Unit": "Data Strategy & Management: Data Governance"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Optimization",
+    "Specialisation / Unit": "Relational database/datagrid design and management"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Optimization",
+    "Specialisation / Unit": "System architecture design and understanding of PaaS and SaaS"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: RPA",
+    "Specialisation / Unit": "RPA Goverance & Process Design"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: RPA",
+    "Specialisation / Unit": "RPA Software Development"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Simulation",
+    "Specialisation / Unit": "3D Model Visualization"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Simulation",
+    "Specialisation / Unit": "Descriptive/diagnostics data analytics"
+  },
+  {
+    "Function / Unit / Skill": "Data & AI: Simulation",
+    "Specialisation / Unit": "Simulation model design & development"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Civil Engineering",
+    "Specialisation / Unit": "Building Maintenance and Facilities Management"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Civil Engineering",
+    "Specialisation / Unit": "Green Building Technologies and Management"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Civil Engineering",
+    "Specialisation / Unit": "Planning and Development"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Electrical and Electronics Engineering",
+    "Specialisation / Unit": "Battery Chemistry and Management"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Electrical and Electronics Engineering",
+    "Specialisation / Unit": "Battery Energy Storage and Charging System"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Electrical and Electronics Engineering",
+    "Specialisation / Unit": "Electrical Infrastructure"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Equipment Engineering",
+    "Specialisation / Unit": "Automation Systems"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Equipment Engineering",
+    "Specialisation / Unit": "Autonomous Systems"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Equipment Engineering",
+    "Specialisation / Unit": "Horizontal Transport Development"
+  },
+  {
+    "Function / Unit / Skill": "Engineering: Equipment Engineering",
+    "Specialisation / Unit": "Smart Grid"
+  },
+  {
+    "Function / Unit / Skill": "Finance",
+    "Specialisation / Unit": "Accounting and Consolidation"
+  },
+  {
+    "Function / Unit / Skill": "Finance",
+    "Specialisation / Unit": "Audit"
+  },
+  {
+    "Function / Unit / Skill": "Finance",
+    "Specialisation / Unit": "Claims and Insurance"
+  },
+  {
+    "Function / Unit / Skill": "Finance",
+    "Specialisation / Unit": "Financial Modeling"
+  },
+  {
+    "Function / Unit / Skill": "Finance",
+    "Specialisation / Unit": "Green Finance: Carbon Accounting and Management"
+  },
+  {
+    "Function / Unit / Skill": "Finance",
+    "Specialisation / Unit": "Risk Management"
+  },
+  {
+    "Function / Unit / Skill": "Finance",
+    "Specialisation / Unit": "Tax"
+  },
+  {
+    "Function / Unit / Skill": "General Management",
+    "Specialisation / Unit": "Business Unit Management"
+  },
+  {
+    "Function / Unit / Skill": "HSS",
+    "Specialisation / Unit": "GHSSS Policy and Planning"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "Benefits"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "Compensation"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "Generalist / Business Partner"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "HR Information Systems / Technology"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "Industrial Relations"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "Organisation Development"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "Talent Acquisition / Recruitment"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "Talent Management"
+  },
+  {
+    "Function / Unit / Skill": "Human Resource",
+    "Specialisation / Unit": "Training / Learning and Development"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Application Development",
+    "Specialisation / Unit": "Software Architecture: Software Analysis & Design"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Application Development",
+    "Specialisation / Unit": "Software Architecture: Software Architecture"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Application Development",
+    "Specialisation / Unit": "Software Engineering: Agile Methodology"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Application Development",
+    "Specialisation / Unit": "Software Engineering: Automated Test Development and Testing"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Application Development",
+    "Specialisation / Unit": "Software Engineering: DevOps / DevSecOps"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Application Development",
+    "Specialisation / Unit": "Software Engineering: Software Integration"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Application Development",
+    "Specialisation / Unit": "UI/UX Design & Development: Customer Experience Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Application Development",
+    "Specialisation / Unit": "UI/UX Design & Development: User Interface Design"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Business Domain Expertise",
+    "Specialisation / Unit": "Business Domain & Needs Analysis"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Cybersecurity",
+    "Specialisation / Unit": "Cybersecurity Governance : Cybersecurity Architecture"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Cybersecurity",
+    "Specialisation / Unit": "Cybersecurity Governance : Cybersecurity Governance"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Cybersecurity",
+    "Specialisation / Unit": "Cybersecurity Incident Handling: Cybersecurity Threat Analysis and Defence"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Cybersecurity",
+    "Specialisation / Unit": "Cybersecurity Operation: Network Security Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Infrastructure",
+    "Specialisation / Unit": "Cloud Computing: Cloud Administration & Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Infrastructure",
+    "Specialisation / Unit": "Cloud Computing: Cloud Architecture"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Infrastructure",
+    "Specialisation / Unit": "Infrastructure Architecture: Network Architecture"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Infrastructure",
+    "Specialisation / Unit": "Network Management: SDN and Network Automation"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Infrastructure",
+    "Specialisation / Unit": "Operations and Management: IT Service Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Infrastructure",
+    "Specialisation / Unit": "Systems & Middleware Management: Backup/ Storage / Virtualisation Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Infrastructure",
+    "Specialisation / Unit": "Systems & Middleware Management: Desktops / Servers Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: IT Governance & Strategy",
+    "Specialisation / Unit": "Business Unit IT Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: IT Governance & Strategy",
+    "Specialisation / Unit": "Change & Transformation Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: IT Governance & Strategy",
+    "Specialisation / Unit": "Enterprise Architecture"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: IT Governance & Strategy",
+    "Specialisation / Unit": "Process Improvement & Optimisation and Problem Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: IT Governance & Strategy",
+    "Specialisation / Unit": "Technology Management & Innovation"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: IT Governance & Strategy",
+    "Specialisation / Unit": "Vendor and Contract Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Product Management",
+    "Specialisation / Unit": "Enterprise Architecture: Business Architecture"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Product Management",
+    "Specialisation / Unit": "IP Management: Product Intellectual Property Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Product Management",
+    "Specialisation / Unit": "Product Life Cycle Management: Customer Experience Management - CX"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Product Management",
+    "Specialisation / Unit": "Product Life Cycle Management: Product Configuration Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Product Management",
+    "Specialisation / Unit": "Product Life Cycle Management: Product Development Lifecycle Management"
+  },
+  {
+    "Function / Unit / Skill": "Info Tech: Product Management",
+    "Specialisation / Unit": "Product Life Cycle Management: Vendor Management"
+  },
+  {
+    "Function / Unit / Skill": "Legal and Corporate Secretariat",
+    "Specialisation / Unit": "Legal - Merger and Acquisition"
+  },
+  {
+    "Function / Unit / Skill": "Legal and Corporate Secretariat",
+    "Specialisation / Unit": "Legal - Personal Data Protection - PDPA"
+  },
+  {
+    "Function / Unit / Skill": "Operations",
+    "Specialisation / Unit": "Auxiliary, Governmental and Customs Management"
+  },
+  {
+    "Function / Unit / Skill": "Operations",
+    "Specialisation / Unit": "Container Planning Management"
+  },
+  {
+    "Function / Unit / Skill": "Operations",
+    "Specialisation / Unit": "Container Terminal Management"
+  },
+  {
+    "Function / Unit / Skill": "Operations",
+    "Specialisation / Unit": "Multi-purpose Terminals"
+  },
+  {
+    "Function / Unit / Skill": "Operations",
+    "Specialisation / Unit": "Resource Planning, Deployment and Support"
+  },
+  {
+    "Function / Unit / Skill": "Operations",
+    "Specialisation / Unit": "Stowage Planning"
+  },
+  {
+    "Function / Unit / Skill": "Operations",
+    "Specialisation / Unit": "Transhipment"
+  },
+  {
+    "Function / Unit / Skill": "Operations",
+    "Specialisation / Unit": "Yard Operations and Planning"
+  },
+  {
+    "Function / Unit / Skill": "Others",
+    "Specialisation / Unit": "Change Management and Transformation"
+  },
+  {
+    "Function / Unit / Skill": "Procurement",
+    "Specialisation / Unit": "Category Management"
+  },
+  {
+    "Function / Unit / Skill": "Procurement",
+    "Specialisation / Unit": "Global Framework Agreement development"
+  },
+  {
+    "Function / Unit / Skill": "Procurement",
+    "Specialisation / Unit": "Supplier Management"
+  },
+  {
+    "Function / Unit / Skill": "Procurement",
+    "Specialisation / Unit": "Sustainable Procurement"
+  },
+  {
+    "Function / Unit / Skill": "Supply Chain and Logistics",
+    "Specialisation / Unit": "4PL"
+  },
+  {
+    "Function / Unit / Skill": "Supply Chain and Logistics",
+    "Specialisation / Unit": "CFS"
+  },
+  {
+    "Function / Unit / Skill": "Supply Chain and Logistics",
+    "Specialisation / Unit": "Contract Logistics"
+  },
+  {
+    "Function / Unit / Skill": "Supply Chain and Logistics",
+    "Specialisation / Unit": "Port Ecosystem"
+  },
+  {
+    "Function / Unit / Skill": "Sustainability",
+    "Specialisation / Unit": "Energy Generalist"
+  },
+  {
+    "Function / Unit / Skill": "Sustainability",
+    "Specialisation / Unit": "Energy Policy and Regulations"
+  },
+  {
+    "Function / Unit / Skill": "Sustainability",
+    "Specialisation / Unit": "ESG policies and strategies"
+  },
+  {
+    "Function / Unit / Skill": "Sustainability",
+    "Specialisation / Unit": "International Forum Green Advocacy"
+  },
+  {
+    "Function / Unit / Skill": "Sustainability",
+    "Specialisation / Unit": "Maritime and Shipping Decarbonisation"
+  },
+  {
+    "Function / Unit / Skill": "Sustainability",
+    "Specialisation / Unit": "Sustainable Supply Chain Management: Green Logistics"
+  },
+  {
+    "Function / Unit / Skill": "Sustainability",
+    "Specialisation / Unit": "Waste Management"
+  }
+]

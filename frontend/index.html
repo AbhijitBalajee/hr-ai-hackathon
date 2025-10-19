@@ -3,126 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TalentFlow AI - PSA Career Navigator</title>
+    <title>SkillsVoyage - PSA Career Development</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .gradient-bg {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #2d2d2d 50%, #404040 75%, #1a1a1a 100%);
         }
-        .card {
-            transition: transform 0.2s;
+        .card-hover {
+            transition: all 0.3s ease;
         }
-        .card:hover {
-            transform: translateY(-2px);
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .5; }
+        .progress-ring {
+            transform: rotate(-90deg);
+            transition: stroke-dashoffset 1s ease-in-out;
         }
-        .pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        .skill-badge {
+            transition: all 0.2s;
+        }
+        .skill-badge:hover {
+            transform: scale(1.05);
+        }
+        .psa-accent {
+            color: #00a8e1;
+        }
+        .psa-accent-bg {
+            background-color: #00a8e1;
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header -->
-    <div class="gradient-bg text-white py-12 shadow-lg">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center gap-4">
-                <div class="text-6xl">🚢</div>
-                <div>
-                    <h1 class="text-5xl font-bold">TalentFlow AI</h1>
-                    <p class="text-xl mt-2 opacity-90">Your Intelligent Career Navigator at PSA International</p>
+    <!-- Header with PSA Branding -->
+    <div class="gradient-bg text-white shadow-2xl">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <i class="fas fa-ship text-6xl psa-accent"></i>
+                    <div>
+                        <h1 class="text-5xl font-bold">SkillsVoyage</h1>
+                        <p class="text-gray-300 mt-1 text-lg italic">Journey to Greater Success at PSA</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-bold psa-accent">PSA</div>
+                    <div class="text-sm text-gray-300">Future-Ready Workforce</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-8 max-w-6xl">
-        <!-- Employee Selector -->
-        <div class="bg-white rounded-xl shadow-lg p-8 mb-8 card">
-            <h2 class="text-3xl font-bold mb-6 text-gray-800">👤 Select Employee</h2>
-            <select id="employeeSelect" class="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition">
+    <div class="container mx-auto px-6 py-8 max-w-7xl">
+        <!-- Employee Selector Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 card-hover border-l-4 border-gray-800">
+            <div class="flex items-center gap-3 mb-4">
+                <i class="fas fa-user-circle text-3xl text-gray-800"></i>
+                <h2 class="text-2xl font-bold text-gray-800">Select Employee</h2>
+            </div>
+            <select id="employeeSelect" class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg focus:border-gray-800 focus:ring-4 focus:ring-gray-200 transition">
                 <option value="">Loading employees...</option>
             </select>
         </div>
 
-        <!-- Current Profile -->
-        <div id="profileCard" class="bg-white rounded-xl shadow-lg p-8 mb-8 card hidden">
-            <h2 class="text-3xl font-bold mb-6 text-gray-800">📋 Current Profile</h2>
+        <!-- Quick Stats Dashboard -->
+        <div id="statsCard" class="hidden mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-t-4 border-gray-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold">Years at PSA</p>
+                            <p id="yearsAtPSA" class="text-3xl font-bold text-gray-800 mt-1">0</p>
+                        </div>
+                        <i class="fas fa-calendar-alt text-4xl text-gray-300"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-t-4 border-green-600">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold">Skills Mastered</p>
+                            <p id="skillCount" class="text-3xl font-bold text-green-600 mt-1">0</p>
+                        </div>
+                        <i class="fas fa-award text-4xl text-green-200"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-t-4 border-purple-600">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold">Department</p>
+                            <p id="deptName" class="text-xl font-bold text-purple-600 mt-1">-</p>
+                        </div>
+                        <i class="fas fa-building text-4xl text-purple-200"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-t-4 border-orange-600">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold">Projects</p>
+                            <p id="projectCount" class="text-3xl font-bold text-orange-600 mt-1">0</p>
+                        </div>
+                        <i class="fas fa-project-diagram text-4xl text-orange-200"></i>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-lg p-6 card-hover border-t-4 border-blue-400">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-300 font-semibold">Leadership Potential</p>
+                            <p id="leadershipScore" class="text-3xl font-bold text-blue-400 mt-1">-</p>
+                        </div>
+                        <i class="fas fa-crown text-4xl text-blue-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Coverage Card -->
+        <div id="skillsCoverageCard" class="bg-white rounded-2xl shadow-lg p-6 mb-6 card-hover border-l-4 border-purple-600 hidden">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-chart-pie text-3xl text-purple-600"></i>
+                    <h2 class="text-2xl font-bold text-gray-800">PSA Skills Framework Coverage</h2>
+                </div>
+                <span id="coveragePercent" class="text-3xl font-bold text-purple-600">0%</span>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-4 mb-4">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl p-4 text-center">
+                    <p class="text-sm text-gray-600 mb-1">Your Skills</p>
+                    <p id="yourSkillsCount" class="text-3xl font-bold text-gray-800">0</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4 text-center">
+                    <p class="text-sm text-gray-600 mb-1">PSA Framework</p>
+                    <p id="totalSkillsCount" class="text-3xl font-bold text-purple-600">107</p>
+                </div>
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 text-center">
+                    <p class="text-sm text-gray-600 mb-1">Growth Opportunities</p>
+                    <p id="recommendedCount" class="text-3xl font-bold text-green-600">0</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-xl p-4">
+                <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <i class="fas fa-lightbulb text-yellow-500"></i>
+                    Recommended Skills to Develop
+                </h3>
+                <div id="recommendedSkillsList" class="flex flex-wrap gap-2"></div>
+            </div>
+        </div>
+
+        <!-- Current Profile Card -->
+        <div id="profileCard" class="bg-white rounded-2xl shadow-lg p-6 mb-6 card-hover border-l-4 border-gray-800 hidden">
+            <div class="flex items-center gap-3 mb-4">
+                <i class="fas fa-briefcase text-3xl text-gray-800"></i>
+                <h2 class="text-2xl font-bold text-gray-800">Current Profile</h2>
+            </div>
+            
             <div id="profileContent" class="mb-6"></div>
             
-            <div class="border-t pt-6">
-                <label class="block text-lg font-semibold mb-3 text-gray-700">🎯 Target Role (Optional)</label>
+            <!-- Career Goals Input -->
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 border-2 border-gray-200">
+                <label class="flex items-center gap-2 text-lg font-bold text-gray-800 mb-3">
+                    <i class="fas fa-bullseye text-gray-800"></i>
+                    Career Aspiration
+                </label>
                 <input type="text" id="targetRole" 
-                       placeholder="e.g., Senior Cloud Architect, Port Operations Manager, CISO"
-                       class="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition mb-4">
+                       placeholder="e.g., Chief Technology Officer, VP Operations, Head of Innovation"
+                       class="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:border-gray-800 focus:ring-4 focus:ring-gray-200 transition mb-4">
                 
                 <button onclick="analyzeCareer()" 
-                        class="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 rounded-lg text-xl font-bold hover:from-blue-700 hover:to-cyan-700 transition shadow-lg">
-                    🤖 Generate AI Career Development Plan
+                        class="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white py-4 rounded-xl text-lg font-bold hover:from-gray-900 hover:to-black transition shadow-lg flex items-center justify-center gap-3">
+                    <i class="fas fa-robot text-2xl"></i>
+                    Generate AI Career Roadmap
                 </button>
             </div>
         </div>
 
         <!-- Loading State -->
-        <div id="loading" class="hidden text-center py-16">
+        <div id="loading" class="hidden bg-white rounded-2xl shadow-lg p-12 text-center border-l-4 border-gray-800">
             <div class="inline-block">
-                <div class="animate-spin rounded-full h-20 w-20 border-b-4 border-blue-600 mx-auto"></div>
-                <p class="mt-6 text-xl text-gray-600 font-semibold pulse">AI is analyzing career path...</p>
-                <p class="mt-2 text-gray-500">This may take 10-15 seconds</p>
+                <i class="fas fa-cog fa-spin text-6xl text-gray-800 mb-4"></i>
+                <p class="text-2xl text-gray-800 font-bold">AI Analysis in Progress...</p>
+                <p class="text-gray-500 mt-2">Analyzing career path, skill gaps, leadership potential & opportunities</p>
             </div>
         </div>
 
-        <!-- AI Analysis Results -->
-        <div id="resultsCard" class="hidden">
+        <!-- Results Dashboard -->
+        <div id="resultsCard" class="hidden space-y-6">
             <!-- Readiness Score -->
-            <div class="bg-gradient-to-br from-blue-500 to-cyan-500 text-white rounded-xl shadow-xl p-8 mb-8">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h2 class="text-3xl font-bold mb-2">Career Readiness Score</h2>
-                        <p id="readinessSummary" class="text-lg opacity-90"></p>
+            <div class="bg-gradient-to-br from-gray-800 to-gray-900 text-white rounded-2xl shadow-2xl p-8">
+                <div class="grid md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-2">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fas fa-chart-line text-4xl"></i>
+                            <h2 class="text-3xl font-bold">Career Readiness Score</h2>
+                        </div>
+                        <p id="readinessSummary" class="text-lg text-gray-200"></p>
                     </div>
-                    <div class="text-8xl font-bold" id="readinessScore"></div>
+                    <div class="flex justify-center">
+                        <div class="relative w-40 h-40">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="10"/>
+                                <circle id="progressCircle" cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="10" 
+                                        stroke-dasharray="283" stroke-dashoffset="283" class="progress-ring" stroke-linecap="round"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span id="readinessScore" class="text-5xl font-bold"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Skill Gaps -->
-            <div class="bg-white rounded-xl shadow-lg p-8 mb-8 card">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">🎯 Priority Skills to Develop</h2>
-                <div id="skillGaps" class="space-y-4"></div>
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-red-600">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-target text-3xl text-red-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Priority Skills Development</h2>
+                </div>
+                <div id="skillGaps" class="grid md:grid-cols-3 gap-4"></div>
             </div>
 
-            <!-- Learning Path -->
-            <div class="bg-white rounded-xl shadow-lg p-8 mb-8 card">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">📚 Your Personalized Learning Roadmap</h2>
-                <div id="learningPath" class="space-y-6"></div>
+            <!-- Learning Roadmap -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-blue-600">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-road text-3xl text-blue-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Your Learning Roadmap</h2>
+                </div>
+                <div id="learningPath" class="space-y-4"></div>
             </div>
 
-            <!-- Next 30 Days -->
-            <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl shadow-lg p-8 mb-8">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">⚡ Start This Month</h2>
-                <ul id="next30Days" class="space-y-3"></ul>
+            <!-- Two Column Layout: Opportunities + Actions -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Internal Opportunities -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fas fa-building text-3xl text-purple-600"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">PSA Opportunities</h2>
+                    </div>
+                    <div id="opportunities" class="space-y-3"></div>
+                </div>
+
+                <!-- 30-Day Action Plan -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fas fa-calendar-check text-3xl text-green-600"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">Start This Month</h2>
+                    </div>
+                    <ul id="next30Days" class="space-y-3"></ul>
+                </div>
             </div>
 
-            <!-- Internal Opportunities -->
-            <div class="bg-white rounded-xl shadow-lg p-8 mb-8 card">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">🔍 Internal Opportunities at PSA</h2>
-                <div id="opportunities" class="space-y-3"></div>
-            </div>
-
-            <!-- Mentorship -->
-            <div class="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl shadow-lg p-8">
-                <h2 class="text-3xl font-bold mb-4 text-gray-800">🤝 Recommended Mentor</h2>
+            <!-- Mentorship Card -->
+            <div class="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-user-tie text-3xl text-orange-600"></i>
+                    <h2 class="text-2xl font-bold text-gray-800">Recommended Mentor</h2>
+                </div>
                 <p id="mentorshipMatch" class="text-lg text-gray-700"></p>
             </div>
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-white py-8 mt-16">
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8 mt-16">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-lg">🚢 Powered by AI • Built for PSA International</p>
-            <p class="text-sm opacity-75 mt-2">Empowering Future-Ready Workforce</p>
+            <div class="flex items-center justify-center gap-3 mb-2">
+                <i class="fas fa-ship text-2xl psa-accent"></i>
+                <p class="text-lg font-semibold">SkillsVoyage</p>
+            </div>
+            <p class="text-sm text-gray-400">Empowering PSA's Future-Ready Workforce</p>
+            <p class="text-xs text-gray-500 mt-2">Built for PSA Code Sprint 2025 • Problem Statement 4</p>
         </div>
     </footer>
 
@@ -130,7 +281,6 @@
         const API_URL = 'http://localhost:5000/api';
         let currentEmployee = null;
 
-        // Load employees on page load
         async function loadEmployees() {
             try {
                 const response = await fetch(`${API_URL}/employees`);
@@ -139,19 +289,20 @@
                 const select = document.getElementById('employeeSelect');
                 select.innerHTML = '<option value="">Choose an employee...</option>';
                 employees.forEach(emp => {
-                    select.innerHTML += `<option value="${emp.id}">${emp.name} - ${emp.title}</option>`;
+                    select.innerHTML += `<option value="${emp.id}">${emp.name} • ${emp.title}</option>`;
                 });
             } catch (error) {
-                document.getElementById('employeeSelect').innerHTML = '<option>Error loading employees. Is backend running?</option>';
                 console.error(error);
+                document.getElementById('employeeSelect').innerHTML = '<option>Error loading. Is backend running?</option>';
             }
         }
 
-        // Load employee profile
         document.getElementById('employeeSelect').addEventListener('change', async (e) => {
             const empId = e.target.value;
             if (!empId) {
                 document.getElementById('profileCard').classList.add('hidden');
+                document.getElementById('statsCard').classList.add('hidden');
+                document.getElementById('skillsCoverageCard').classList.add('hidden');
                 document.getElementById('resultsCard').classList.add('hidden');
                 return;
             }
@@ -160,49 +311,70 @@
                 const response = await fetch(`${API_URL}/employee/${empId}`);
                 currentEmployee = await response.json();
                 
-                document.getElementById('profileCard').classList.remove('hidden');
-                document.getElementById('resultsCard').classList.add('hidden');
-                
-                const yearsAtPSA = 2025 - parseInt(currentEmployee.employment_info.hire_date.split('-')[0]);
-                
-                document.getElementById('profileContent').innerHTML = `
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <div>
-                                <p class="text-sm text-gray-500 font-semibold uppercase">Current Role</p>
-                                <p class="text-xl font-bold text-gray-800">${currentEmployee.employment_info.job_title}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500 font-semibold uppercase">Department</p>
-                                <p class="text-lg font-semibold text-gray-700">${currentEmployee.employment_info.department}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500 font-semibold uppercase">Experience at PSA</p>
-                                <p class="text-lg font-semibold text-gray-700">${yearsAtPSA} years</p>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500 font-semibold uppercase mb-3">Top Skills</p>
-                            <div class="flex flex-wrap gap-2">
-                                ${currentEmployee.skills.slice(0, 6).map(s => 
-                                    `<span class="bg-blue-100 text-blue-800 px-3 py-2 rounded-lg text-sm font-semibold">${s.skill_name}</span>`
-                                ).join('')}
-                                ${currentEmployee.skills.length > 6 ? 
-                                    `<span class="bg-gray-100 text-gray-600 px-3 py-2 rounded-lg text-sm">+${currentEmployee.skills.length - 6} more</span>` 
-                                    : ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                // Scroll to profile
+                displayProfile(currentEmployee, empId);
                 document.getElementById('profileCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) {
-                alert('Error loading employee profile: ' + error.message);
+                alert('Error loading employee');
             }
         });
 
-        // Analyze career
+        function displayProfile(emp, empId) {
+            // Show cards
+            document.getElementById('profileCard').classList.remove('hidden');
+            document.getElementById('statsCard').classList.remove('hidden');
+            document.getElementById('skillsCoverageCard').classList.remove('hidden');
+            document.getElementById('resultsCard').classList.add('hidden');
+            
+            // Stats
+            const yearsAtPSA = 2025 - parseInt(emp.employment_info.hire_date.split('-')[0]);
+            document.getElementById('yearsAtPSA').textContent = yearsAtPSA;
+            document.getElementById('skillCount').textContent = emp.skills.length;
+            document.getElementById('deptName').textContent = emp.employment_info.department.split(':')[0];
+            document.getElementById('projectCount').textContent = emp.projects?.length || 0;
+            
+            // Calculate Leadership Potential Score (based on competencies + experience)
+            const advancedComps = emp.competencies.filter(c => c.level === 'Advanced').length;
+            const leadershipPotential = Math.min(95, 60 + (advancedComps * 10) + (yearsAtPSA * 2));
+            document.getElementById('leadershipScore').textContent = leadershipPotential + '%';
+            
+            // Profile
+            const initials = emp.personal_info.name.split(' ').map(n => n[0]).join('');
+            document.getElementById('profileContent').innerHTML = `
+                <div class="flex items-center gap-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+                        ${initials}
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-gray-800">${emp.personal_info.name}</h3>
+                        <p class="text-lg text-gray-600">${emp.employment_info.job_title}</p>
+                        <div class="flex gap-3 mt-2">
+                            ${emp.competencies.slice(0, 3).map(c => 
+                                `<span class="px-3 py-1 ${c.level === 'Advanced' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'} rounded-full text-sm font-semibold">${c.name}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Fetch skills matching
+            fetch(`${API_URL}/match-skills/${empId}`)
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('coveragePercent').textContent = data.coverage_percentage + '%';
+                    document.getElementById('yourSkillsCount').textContent = data.current_skills_count;
+                    document.getElementById('totalSkillsCount').textContent = data.total_psa_skills;
+                    document.getElementById('recommendedCount').textContent = data.recommended_skills.length;
+                    
+                    document.getElementById('recommendedSkillsList').innerHTML = 
+                        data.recommended_skills.slice(0, 8).map(skill => 
+                            `<span class="px-3 py-2 bg-white border-2 border-purple-200 rounded-lg text-sm font-semibold text-gray-700 hover:bg-purple-50 transition skill-badge">
+                                ${skill.skill}
+                            </span>`
+                        ).join('');
+                })
+                .catch(err => console.error('Skills matching error:', err));
+        }
+
         async function analyzeCareer() {
             if (!currentEmployee) return;
 
@@ -221,13 +393,14 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('Analysis failed');
+                    const error = await response.json();
+                    throw new Error(error.error || 'Analysis failed');
                 }
 
                 const result = await response.json();
                 displayResults(result);
             } catch (error) {
-                alert('Error analyzing career: ' + error.message + '\n\nMake sure your OpenAI API key is set correctly.');
+                alert('Error: ' + error.message + '\n\nPlease check:\n1. Backend is running\n2. API key is configured\n3. Try again in a moment');
                 console.error(error);
             } finally {
                 document.getElementById('loading').classList.add('hidden');
@@ -237,81 +410,81 @@
         function displayResults(data) {
             document.getElementById('resultsCard').classList.remove('hidden');
             
-            // Score with color coding
+            // Animated score
             const score = data.readiness_score;
-            let scoreColor = 'text-yellow-400';
-            if (score >= 80) scoreColor = 'text-green-400';
-            else if (score < 60) scoreColor = 'text-orange-400';
-            
             const scoreEl = document.getElementById('readinessScore');
+            const circleEl = document.getElementById('progressCircle');
+            
             scoreEl.textContent = score + '%';
-            scoreEl.className = `text-8xl font-bold ${scoreColor}`;
+            const offset = 283 - (283 * score / 100);
+            circleEl.style.strokeDashoffset = offset;
+            
             document.getElementById('readinessSummary').textContent = data.summary;
             
             // Skill Gaps
             document.getElementById('skillGaps').innerHTML = data.skill_gaps.map(gap => {
                 const colors = {
-                    'High': { border: 'border-red-500', bg: 'bg-red-50', badge: 'bg-red-100 text-red-700' },
-                    'Medium': { border: 'border-yellow-500', bg: 'bg-yellow-50', badge: 'bg-yellow-100 text-yellow-700' },
-                    'Low': { border: 'border-green-500', bg: 'bg-green-50', badge: 'bg-green-100 text-green-700' }
+                    'High': 'from-red-500 to-pink-500',
+                    'Medium': 'from-yellow-500 to-orange-500',
+                    'Low': 'from-green-500 to-emerald-500'
                 };
-                const color = colors[gap.priority] || colors['Medium'];
-                
                 return `
-                    <div class="border-l-4 ${color.border} ${color.bg} p-4 rounded-r-lg">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="font-bold text-lg text-gray-800">${gap.skill}</span>
-                            <span class="text-sm px-3 py-1 rounded-full font-semibold ${color.badge}">${gap.priority} Priority</span>
+                    <div class="bg-gradient-to-br ${colors[gap.priority]} text-white rounded-xl p-6 card-hover">
+                        <div class="flex items-center justify-between mb-3">
+                            <i class="fas fa-bolt text-3xl"></i>
+                            <span class="text-sm font-bold opacity-90">${gap.priority}</span>
                         </div>
-                        <p class="text-gray-700">${gap.why}</p>
+                        <h4 class="text-xl font-bold mb-2">${gap.skill}</h4>
+                        <p class="text-sm opacity-90">${gap.why}</p>
                     </div>
                 `;
             }).join('');
             
             // Learning Path
-            document.getElementById('learningPath').innerHTML = data.learning_path.map(step => `
-                <div class="border-2 border-gray-200 rounded-lg p-6 hover:shadow-md transition">
-                    <div class="flex items-start gap-4 mb-3">
-                        <span class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg flex-shrink-0">${step.step}</span>
-                        <div class="flex-grow">
-                            <div class="flex justify-between items-start mb-2">
-                                <span class="font-bold text-xl text-gray-800">${step.skill}</span>
-                                <span class="text-sm bg-gray-100 px-3 py-1 rounded-full font-semibold text-gray-600">${step.timeline}</span>
-                            </div>
-                            <p class="text-gray-700 mb-3">${step.action}</p>
-                            <div class="flex flex-wrap gap-2">
-                                ${step.resources.map(r => `<span class="text-sm bg-blue-50 text-blue-700 px-3 py-1 rounded-lg font-medium">📚 ${r}</span>`).join('')}
-                            </div>
+            document.getElementById('learningPath').innerHTML = data.learning_path.map((step, i) => `
+                <div class="flex gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                            ${step.step}
+                        </div>
+                        ${i < data.learning_path.length - 1 ? '<div class="w-1 flex-grow bg-gray-300 my-2"></div>' : ''}
+                    </div>
+                    <div class="flex-grow bg-gray-50 rounded-xl p-6 mb-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-gray-800">${step.skill}</h4>
+                            <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">${step.timeline}</span>
+                        </div>
+                        <p class="text-gray-700 mb-3">${step.action}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${step.resources.map(r => `<span class="bg-white border border-gray-300 px-3 py-1 rounded-lg text-sm"><i class="fas fa-book text-gray-800"></i> ${r}</span>`).join('')}
                         </div>
                     </div>
                 </div>
             `).join('');
             
-            // Next 30 days
+            // Opportunities
+            document.getElementById('opportunities').innerHTML = data.internal_opportunities.map(opp => 
+                `<div class="bg-white border-l-4 border-purple-500 p-4 rounded-lg shadow">
+                    <i class="fas fa-arrow-right text-purple-600"></i> ${opp}
+                </div>`
+            ).join('');
+            
+            // Next 30 Days
             document.getElementById('next30Days').innerHTML = data.next_30_days.map((item, i) => 
-                `<li class="flex items-start gap-3 text-lg">
-                    <span class="text-green-600 text-2xl flex-shrink-0">✓</span>
-                    <span class="text-gray-700"><strong>Week ${i+1}:</strong> ${item}</span>
+                `<li class="flex items-start gap-3 bg-white p-4 rounded-lg shadow">
+                    <i class="fas fa-check-circle text-green-600 text-xl mt-1"></i>
+                    <span class="text-gray-700">${item}</span>
                 </li>`
             ).join('');
             
-            // Opportunities
-            document.getElementById('opportunities').innerHTML = data.internal_opportunities.map(opp => 
-                `<div class="bg-blue-50 border border-blue-200 p-4 rounded-lg">
-                    <p class="text-gray-800 font-medium">🎯 ${opp}</p>
-                </div>`
-            ).join('');
-
             // Mentorship
             document.getElementById('mentorshipMatch').textContent = data.mentorship_match;
 
-            // Scroll to results
             setTimeout(() => {
                 document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
             }, 100);
         }
 
-        // Initialize
         loadEmployees();
     </script>
 </body>

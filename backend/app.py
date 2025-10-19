@@ -10,18 +10,24 @@ app = Flask(__name__)
 CORS(app)
 
 # TEMPORARY - For testing only! Remove before pushing to GitHub!
-# Uncomment and paste your key here if .env isn't working
-# TEST_API_KEY = "paste_your_actual_key_here"
 TEST_API_KEY = None  # Set to None to use .env, or paste key as string for testing
 
 # Load employee data
 with open('../data/Employee_Profiles.json', 'r', encoding='utf-8') as f:
     employees = json.load(f)
 
+# Load skills taxonomy
+with open('../data/skills_taxonomy.json', 'r', encoding='utf-8') as f:
+    skills_taxonomy = json.load(f)
+
 @app.route('/api/test', methods=['GET'])
 def test():
     """Test endpoint"""
-    return jsonify({"status": "Backend is running!", "total_employees": len(employees)})
+    return jsonify({
+        "status": "Backend is running!", 
+        "total_employees": len(employees),
+        "total_skills": len(skills_taxonomy)
+    })
 
 @app.route('/api/debug', methods=['GET'])
 def debug():
@@ -55,6 +61,63 @@ def get_employee(emp_id):
         return jsonify({'error': 'Not found'}), 404
     return jsonify(emp)
 
+@app.route('/api/skills-taxonomy', methods=['GET'])
+def get_skills_taxonomy():
+    """Get all available skills in PSA"""
+    return jsonify(skills_taxonomy)
+
+@app.route('/api/match-skills/<emp_id>', methods=['GET'])
+def match_skills(emp_id):
+    """Match employee skills against full PSA taxonomy"""
+    emp = next((e for e in employees if e['employee_id'] == emp_id), None)
+    if not emp:
+        return jsonify({'error': 'Not found'}), 404
+    
+    # Get employee's current skills
+    current_skills = [s['skill_name'].lower() for s in emp['skills']]
+    current_functions = list(set([s['function_area'].lower() for s in emp['skills']]))
+    
+    # Build skills map
+    all_skills = {}
+    for skill in skills_taxonomy:
+        func = skill['Function / Unit / Skill']
+        spec = skill['Specialisation / Unit']
+        
+        if func not in all_skills:
+            all_skills[func] = []
+        all_skills[func].append(spec)
+    
+    # Recommend related skills in their domain
+    recommendations = []
+    for func in current_functions:
+        for skill_func in all_skills.keys():
+            # Check if this function area is related
+            if any(word in skill_func.lower() for word in func.lower().split()):
+                for spec in all_skills[skill_func]:
+                    # Only recommend if they don't have it
+                    if spec.lower() not in ' '.join(current_skills).lower():
+                        recommendations.append({
+                            'function': skill_func,
+                            'skill': spec,
+                            'relevance': 'high'
+                        })
+    
+    # Remove duplicates
+    seen = set()
+    unique_recs = []
+    for rec in recommendations:
+        key = rec['skill'].lower()
+        if key not in seen:
+            seen.add(key)
+            unique_recs.append(rec)
+    
+    return jsonify({
+        'current_skills_count': len(current_skills),
+        'total_psa_skills': len(skills_taxonomy),
+        'recommended_skills': unique_recs[:15],
+        'coverage_percentage': round(len(current_skills) / len(skills_taxonomy) * 100, 1)
+    })
+
 @app.route('/api/analyze', methods=['POST'])
 def analyze_career():
     """AI-powered career analysis using PSA's Azure OpenAI API"""
@@ -71,223 +134,201 @@ def analyze_career():
     competencies = [f"{c['name']} ({c['level']})" for c in emp['competencies']]
     years_at_psa = 2025 - int(emp['employment_info']['hire_date'][:4])
     
-    # Get recent projects/experiences
-    recent_experience = ""
-    if emp.get('experiences'):
-        recent_experience = f"Recent experience: {emp['experiences'][0].get('focus', '')}"
+    # Get skills taxonomy context - CONDENSED to reduce token usage
+    relevant_skills = []
+    current_dept = emp['employment_info']['department'].split(':')[0]
     
-    prompt = f"""You are an expert career advisor at PSA International, a global port operator specializing in container terminals and supply chain solutions.
+    for skill in skills_taxonomy:
+        func = skill['Function / Unit / Skill']
+        spec = skill['Specialisation / Unit']
+        if (current_dept.lower() in func.lower() or 
+            (target_role and any(word in func.lower() for word in target_role.lower().split() if len(word) > 3))):
+            relevant_skills.append(spec)
+    
+    # Deduplicate and limit to 10 most relevant
+    skills_context = ", ".join(list(set(relevant_skills))[:10]) if relevant_skills else "General PSA competencies"
+    
+    # SIMPLIFIED PROMPT to reduce token usage
+    prompt = f"""You are a career advisor at PSA International (global port operator). Analyze this employee's career development.
 
-Employee Profile:
-- Name: {emp['personal_info']['name']}
-- Current Role: {emp['employment_info']['job_title']}
-- Department: {emp['employment_info']['department']}
-- Years at PSA: {years_at_psa}
-- Current Skills: {', '.join(current_skills[:10])}
-- Competencies: {', '.join(competencies)}
-{recent_experience}
+Employee: {emp['personal_info']['name']}
+Current: {emp['employment_info']['job_title']} in {emp['employment_info']['department'].split(':')[0]}
+Experience: {years_at_psa} years at PSA
+Skills: {', '.join(current_skills[:8])}
+Strengths: {', '.join(competencies[:3])}
 
-Target Role: {target_role if target_role else 'Career advancement in their field'}
+Target: {target_role if target_role else 'Career advancement'}
 
-Provide a comprehensive career development plan in this EXACT JSON format:
+PSA Skills Available: {skills_context}
+
+Create a JSON career plan:
 {{
   "readiness_score": 75,
-  "summary": "2-3 sentence assessment of their readiness and potential for the target role",
+  "summary": "Two sentence assessment of readiness",
   "skill_gaps": [
-    {{"skill": "Specific Skill Name", "priority": "High", "why": "Detailed explanation of why this skill is important for the target role"}},
-    {{"skill": "Another Skill", "priority": "Medium", "why": "Reason this skill matters"}},
-    {{"skill": "Third Skill", "priority": "Low", "why": "Why this is beneficial but not critical"}}
+    {{"skill": "Skill Name", "priority": "High", "why": "Brief reason"}},
+    {{"skill": "Another Skill", "priority": "Medium", "why": "Brief reason"}},
+    {{"skill": "Third Skill", "priority": "Low", "why": "Brief reason"}}
   ],
   "learning_path": [
-    {{"step": 1, "skill": "First Priority Skill", "action": "Concrete action they should take", "timeline": "3 months", "resources": ["Specific Course Name", "Certification Name", "Book/Resource"]}},
-    {{"step": 2, "skill": "Second Skill", "action": "Next specific action", "timeline": "2 months", "resources": ["Training program", "Workshop"]}},
-    {{"step": 3, "skill": "Third Skill", "action": "Follow-up action", "timeline": "4 months", "resources": ["Advanced certification", "Mentorship"]}}
+    {{"step": 1, "skill": "Priority Skill", "action": "What to do", "timeline": "3 months", "resources": ["Course/Cert 1", "Course 2"]}},
+    {{"step": 2, "skill": "Next Skill", "action": "Next action", "timeline": "2 months", "resources": ["Training", "Workshop"]}},
+    {{"step": 3, "skill": "Third Skill", "action": "Follow-up", "timeline": "4 months", "resources": ["Certification"]}}
   ],
   "internal_opportunities": [
-    "Specific PSA project or initiative they could join (e.g., 'Join the Tuas Port Automation Enhancement team')",
-    "Another concrete internal opportunity (e.g., 'Lead the PORTNET API modernization workstream')",
-    "Cross-functional opportunity (e.g., 'Participate in the Regional Digital Transformation Committee')"
+    "Specific PSA project (e.g., Tuas Port Automation team)",
+    "Another PSA opportunity (e.g., PORTNET modernization)",
+    "Cross-functional opportunity"
   ],
-  "mentorship_match": "Suggest a specific type of mentor they should seek at PSA and exactly why (e.g., 'Connect with a Senior Director in Operations who has experience in automation projects, as they can provide insights on bridging technical and operational leadership')",
+  "mentorship_match": "Type of mentor to seek at PSA and why",
   "next_30_days": [
-    "Week 1: Specific actionable task",
-    "Week 2: Another concrete step", 
-    "Week 3: Third specific action"
+    "Week 1: Specific action",
+    "Week 2: Another action",
+    "Week 3: Third action"
   ]
 }}
 
-Guidelines:
-- Be specific to PSA's operations: automated terminals, PORTNET platform, global port network, supply chain digitalization
-- Reference real industry trends: AI in logistics, IoT in ports, sustainability in maritime
-- Readiness score should be realistic (50-90 range based on skill gaps)
-- All recommendations must be actionable and concrete, not generic
-- Consider multi-generational workforce: tailor advice to their career stage"""
+Return ONLY valid JSON."""
 
-    # Get API key - use test key if set, otherwise from .env
+    # Get API key - CRITICAL: Verify it's loaded
     api_key = TEST_API_KEY if TEST_API_KEY else os.getenv('AZURE_OPENAI_KEY')
     
     if not api_key:
+        print("ERROR: No API key found!")
         return jsonify({'error': 'API key not configured. Check .env file.'}), 500
     
-    # Construct full API URL
+    # Construct API URL
     base_url = os.getenv('AZURE_OPENAI_ENDPOINT')
     api_version = os.getenv('AZURE_OPENAI_API_VERSION')
+    
+    if not base_url or not api_version:
+        print("ERROR: Missing endpoint or API version!")
+        return jsonify({'error': 'API configuration incomplete'}), 500
+    
     api_url = f"{base_url}?api-version={api_version}"
     
-    # Headers for Azure API Management - trying multiple header formats
+    # Headers - TRY MULTIPLE FORMATS
     headers = {
         "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": api_key,  # Standard Azure APIM header
-        "api-key": api_key,                     # Alternative format
-        "Subscription-Key": api_key,            # Another alternative
-        "Authorization": f"Bearer {api_key}"    # OAuth style (just in case)
+        "Ocp-Apim-Subscription-Key": api_key,
+        "api-key": api_key,
+        "Subscription-Key": api_key
     }
     
     # Request body
-    # Request body - using default parameters for gpt-5-mini
     body = {
-    "messages": [
-        {"role": "system", "content": "You are a career development expert specializing in the maritime and port logistics industry. Always respond with valid JSON."},
-        {"role": "user", "content": prompt}
-    ],
-    "max_completion_tokens": 2500
-}
+        "messages": [
+            {"role": "user", "content": prompt}
+        ],
+        "max_completion_tokens": 3500
+    }
     
     try:
         print(f"\n{'='*60}")
-        print(f"API CALL DEBUG INFO")
+        print(f"API CALL DEBUG")
         print(f"{'='*60}")
-        print(f"URL: {api_url}")
-        print(f"Using test key: {bool(TEST_API_KEY)}")
-        print(f"Key present: {bool(api_key)}")
-        print(f"Key length: {len(api_key) if api_key else 0}")
-        print(f"Key starts with: {api_key[:8] if api_key else 'NONE'}...")
         print(f"Employee: {emp['personal_info']['name']}")
-        print(f"Target role: {target_role or 'Not specified'}")
-        print(f"Headers being sent: {list(headers.keys())}")
+        print(f"Target: {target_role or 'Not specified'}")
+        print(f"Prompt length: {len(prompt)} chars")
+        print(f"API Key present: {bool(api_key)}")
+        print(f"API Key length: {len(api_key)}")
+        print(f"API Key starts: {api_key[:8]}...")
+        print(f"Endpoint: {base_url}")
+        print(f"Full URL: {api_url[:80]}...")
+        print(f"Headers sent: {list(headers.keys())}")
         print(f"{'='*60}\n")
         
-        # Make the request
-        response = requests.post(api_url, headers=headers, json=body, timeout=45)
+        # Make request
+        response = requests.post(api_url, headers=headers, json=body, timeout=60)
         
         print(f"Response Status: {response.status_code}")
-        print(f"Response Headers: {dict(response.headers)}\n")
         
-        # Check for errors
         if response.status_code != 200:
             error_detail = response.text[:1000]
-            print(f"{'='*60}")
-            print(f"API ERROR RESPONSE")
+            print(f"\n{'='*60}")
+            print(f"API ERROR DETAILS")
             print(f"{'='*60}")
             print(error_detail)
             print(f"{'='*60}\n")
-            
-            # Provide helpful error messages
-            if response.status_code == 401:
-                suggestion = "API key authentication failed. Possible issues:\n" \
-                           "1. Wrong API key (check if you copied it correctly)\n" \
-                           "2. Wrong header format (PSA may use a different header)\n" \
-                           "3. Key not activated yet (check with PSA organizers)\n" \
-                           "4. Try asking PSA for a working example"
-            elif response.status_code == 403:
-                suggestion = "Access forbidden. Your key may not have permission for this endpoint."
-            elif response.status_code == 404:
-                suggestion = "Endpoint not found. Check the URL format with PSA organizers."
-            elif response.status_code == 429:
-                suggestion = "Rate limit exceeded. Wait a moment and try again."
-            else:
-                suggestion = "Unknown error. Contact PSA organizers for support."
-            
             return jsonify({
-                'error': f'API returned status {response.status_code}',
+                'error': f'API error {response.status_code}',
                 'details': error_detail,
-                'suggestion': suggestion
+                'suggestion': 'Check API key in .env file. It should be 32 characters with no quotes or spaces.'
             }), 500
         
         # Parse response
         result_data = response.json()
         
-        # Check if response has the expected structure
         if 'choices' not in result_data or len(result_data['choices']) == 0:
-            print(f"Unexpected response structure: {result_data}")
-            return jsonify({'error': 'Unexpected API response structure'}), 500
+            print(f"ERROR: Invalid response structure")
+            return jsonify({'error': 'Invalid API response'}), 500
         
-        content = result_data['choices'][0]['message']['content']
+        choice = result_data['choices'][0]
+        finish_reason = choice.get('finish_reason', 'unknown')
+        content = choice.get('message', {}).get('content', '')
         
-        print(f"✓ AI Response received (length: {len(content)} chars)")
+        print(f"Finish reason: {finish_reason}")
+        print(f"Content length: {len(content)} chars")
         
-        # Try to extract JSON if wrapped in markdown
+        if not content:
+            print(f"ERROR: Empty content - finish_reason: {finish_reason}")
+            return jsonify({'error': 'AI returned empty response'}), 500
+        
+        if finish_reason == 'length':
+            print(f"WARNING: Response truncated due to token limit")
+        
+        # Extract JSON
         if "```json" in content:
             content = content.split("```json")[1].split("```")[0].strip()
         elif "```" in content:
             content = content.split("```")[1].split("```")[0].strip()
         
-        # Parse the JSON
         result = json.loads(content)
         
-        # Validate the result has required fields
-        required_fields = ['readiness_score', 'summary', 'skill_gaps', 'learning_path', 'internal_opportunities', 'mentorship_match', 'next_30_days']
-        missing_fields = [field for field in required_fields if field not in result]
-        
-        if missing_fields:
-            print(f"Warning: Missing fields in AI response: {missing_fields}")
-        
-        print(f"✓ Analysis completed successfully")
-        print(f"{'='*60}\n")
+        print(f"✓ Analysis completed successfully\n")
         
         return jsonify(result)
     
     except requests.exceptions.Timeout:
         print("ERROR: Request timeout")
-        return jsonify({'error': 'Request timed out after 45 seconds. Please try again.'}), 500
-    
-    except requests.exceptions.ConnectionError as e:
-        print(f"ERROR: Connection error - {str(e)}")
-        return jsonify({'error': 'Could not connect to API. Check your internet connection and endpoint URL.'}), 500
-    
-    except requests.exceptions.RequestException as e:
-        print(f"ERROR: Request exception - {str(e)}")
-        return jsonify({'error': f'Request failed: {str(e)}'}), 500
+        return jsonify({'error': 'Request timeout. Try again.'}), 500
     
     except json.JSONDecodeError as e:
-        print(f"ERROR: JSON parsing failed - {str(e)}")
+        print(f"JSON Error: {str(e)}")
         print(f"Content preview: {content[:300]}")
-        return jsonify({
-            'error': 'AI response was not valid JSON',
-            'details': 'The AI generated text instead of structured data. Try again.'
-        }), 500
-    
-    except KeyError as e:
-        print(f"ERROR: Missing key in response - {str(e)}")
-        return jsonify({'error': f'Response missing expected field: {str(e)}'}), 500
+        return jsonify({'error': 'Invalid JSON from AI. Try again.'}), 500
     
     except Exception as e:
-        print(f"ERROR: Unexpected error - {str(e)}")
+        print(f"Unexpected Error: {str(e)}")
         import traceback
         traceback.print_exc()
-        return jsonify({'error': f'Unexpected error: {str(e)}'}), 500
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     print("\n" + "="*60)
     print("🚢 PSA TalentFlow AI Backend Starting...")
     print("="*60)
     print(f"✓ Loaded {len(employees)} employee profiles")
+    print(f"✓ Loaded {len(skills_taxonomy)} PSA skills")
     
-    # Check configuration
+    # Check API key on startup
     if TEST_API_KEY:
         print(f"⚠️  Using TEST_API_KEY (hardcoded)")
+        print(f"    Key length: {len(TEST_API_KEY)}")
     else:
         key = os.getenv('AZURE_OPENAI_KEY')
         if key:
-            print(f"✓ API key loaded from .env (length: {len(key)})")
+            print(f"✓ API key loaded from .env")
+            print(f"    Key length: {len(key)}")
+            print(f"    Key preview: {key[:8]}...")
         else:
-            print(f"❌ WARNING: No API key found!")
+            print(f"❌ WARNING: No API key found in .env!")
     
     endpoint = os.getenv('AZURE_OPENAI_ENDPOINT')
     if endpoint:
-        print(f"✓ Endpoint: {endpoint[:50]}...")
+        print(f"✓ Endpoint: {endpoint[:60]}...")
     else:
-        print(f"❌ WARNING: No endpoint configured!")
+        print(f"❌ WARNING: No endpoint found!")
     
     print(f"✓ Server running on http://127.0.0.1:5000")
     print("="*60 + "\n")
