@@ -302,6 +302,17 @@
                     <i class="fas fa-robot text-2xl"></i>
                     Generate AI Career Roadmap
                 </button>
+                
+                <div class="mt-4 pt-4 border-t-2 border-gray-300">
+                    <button onclick="openSkillsMatch()" 
+                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-lg font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg flex items-center justify-center gap-3">
+                        <i class="fas fa-fire text-2xl"></i>
+                        🔍 Discover Your Next Opportunity
+                    </button>
+                    <p class="text-sm text-gray-500 text-center mt-2">
+                        Swipe through PSA opportunities matched to your skills
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -341,6 +352,71 @@
                 </div>
             </div>
 
+            <!-- Business Impact ROI Card -->
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8 border-2 border-blue-400">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-chart-line text-4xl"></i>
+                    <h2 class="text-3xl font-bold">Career Investment ROI</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-4 gap-6">
+                    <!-- Cost Savings -->
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fas fa-dollar-sign text-3xl text-green-300"></i>
+                            <div>
+                                <p class="text-sm text-blue-100 font-semibold">Cost Savings</p>
+                                <p class="text-3xl font-bold">$12,500</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-blue-100">vs. External Hire Cost</p>
+                    </div>
+
+                    <!-- Time to Competency -->
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fas fa-clock text-3xl text-yellow-300"></i>
+                            <div>
+                                <p class="text-sm text-blue-100 font-semibold">Time to Promotion</p>
+                                <p class="text-3xl font-bold">8 months</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-blue-100">vs. Industry Avg: 18 months</p>
+                    </div>
+
+                    <!-- Retention Impact -->
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fas fa-chart-line text-3xl text-purple-300"></i>
+                            <div>
+                                <p class="text-sm text-blue-100 font-semibold">Retention Boost</p>
+                                <p class="text-3xl font-bold">+45%</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-blue-100">With clear career path</p>
+                    </div>
+
+                    <!-- Skills Coverage -->
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fas fa-trophy text-3xl text-orange-300"></i>
+                            <div>
+                                <p class="text-sm text-blue-100 font-semibold">Skills Coverage</p>
+                                <p class="text-3xl font-bold">87%</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-blue-100">↑ from 64%</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-white bg-opacity-10 rounded-xl p-4">
+                    <p class="text-sm text-blue-100 flex items-center gap-2">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Following this personalized roadmap maximizes ROI and accelerates your career trajectory at PSA</span>
+                    </p>
+                </div>
+            </div>
+
             <!-- Skill Gaps -->
             <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-red-600">
                 <div class="flex items-center gap-3 mb-6">
@@ -348,6 +424,93 @@
                     <h2 class="text-3xl font-bold text-gray-800">Priority Skills Development</h2>
                 </div>
                 <div id="skillGaps" class="grid md:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- Progress & Achievements -->
+            <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-2xl shadow-lg p-8 border-2 border-purple-400">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-trophy text-4xl"></i>
+                    <h2 class="text-3xl font-bold">Your Progress & Achievements</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Progress Tracker -->
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold flex items-center gap-2">
+                                <i class="fas fa-calendar-check"></i>
+                                Learning Journey
+                            </h3>
+                            <span class="text-2xl font-bold">Week 2 of 12</span>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="bg-white bg-opacity-20 rounded-full h-4 mb-4">
+                            <div class="bg-white rounded-full h-4" style="width: 17%"></div>
+                        </div>
+                        
+                        <div class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-fire text-orange-300"></i>
+                            <span>On track! Keep up the momentum ✨</span>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-award"></i>
+                            Achievements Unlocked
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                                <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-2xl">
+                                    ⚡
+                                </div>
+                                <div class="flex-grow">
+                                    <p class="font-bold text-sm">Fast Starter</p>
+                                    <p class="text-xs text-purple-100">Started learning within 24 hours</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                                <div class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-2xl">
+                                    🔥
+                                </div>
+                                <div class="flex-grow">
+                                    <p class="font-bold text-sm">5-Day Streak</p>
+                                    <p class="text-xs text-purple-100">Consistent learning momentum</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                                <div class="w-10 h-10 bg-green-400 rounded-full flex items-center justify-center text-2xl">
+                                    📚
+                                </div>
+                                <div class="flex-grow">
+                                    <p class="font-bold text-sm">Module Complete</p>
+                                    <p class="text-xs text-purple-100">Cloud Fundamentals finished</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="mt-6 grid grid-cols-3 gap-4">
+                    <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
+                        <p class="text-3xl font-bold mb-1">12</p>
+                        <p class="text-sm text-purple-100">Hours Invested</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
+                        <p class="text-3xl font-bold mb-1">3/8</p>
+                        <p class="text-sm text-purple-100">Skills Mastered</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
+                        <p class="text-3xl font-bold mb-1">87%</p>
+                        <p class="text-sm text-purple-100">Completion Rate</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Learning Roadmap -->
@@ -389,6 +552,81 @@
                 </div>
                 <p id="mentorshipMatch" class="text-lg text-gray-700"></p>
             </div>
+        </div>
+
+        <!-- Opportunity-Focused Results -->
+        <div id="opportunityResultsCard" class="hidden space-y-6">
+            <!-- Back Button -->
+            <button onclick="backToEmployeeView()" class="flex items-center gap-2 text-gray-700 hover:text-gray-900 font-semibold mb-4 transition">
+                <i class="fas fa-arrow-left text-xl"></i>
+                <span>Back to Full Career Analysis</span>
+            </button>
+
+            <!-- Header -->
+            <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-2xl shadow-2xl p-8">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-4xl">
+                        🎯
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-purple-100 text-sm font-semibold mb-1">FOCUSED LEARNING PATH FOR:</p>
+                        <h2 id="oppTitle" class="text-3xl font-bold"></h2>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-purple-100 text-sm mb-1">Match Score</p>
+                        <p id="oppCompatibility" class="text-4xl font-bold"></p>
+                    </div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-xl p-4">
+                    <p id="oppReadiness" class="text-lg"></p>
+                    <p class="text-sm text-purple-100 mt-2">
+                        <i class="fas fa-clock"></i> Time to ready: <span id="oppTimeToReady" class="font-bold"></span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Learning Steps -->
+            <div id="oppLearningSteps" class="space-y-6"></div>
+
+            <!-- Two Column Layout -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Quick Wins -->
+                <div class="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fas fa-rocket text-3xl text-orange-600"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">Quick Wins This Week</h2>
+                    </div>
+                    <ul id="oppQuickWins" class="space-y-3"></ul>
+                </div>
+
+                <!-- Success Metrics -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fas fa-trophy text-3xl text-green-600"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">Success Milestones</h2>
+                    </div>
+                    <div id="oppSuccessMetrics" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- Next Step CTA -->
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-4xl">
+                        ⚡
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold mb-2">Your Next Step Today:</h3>
+                        <p id="oppNextStep" class="text-xl"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Opportunities Button -->
+            <button onclick="backToSkillsMatch()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-lg font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg flex items-center justify-center gap-3">
+                <i class="fas fa-fire text-2xl"></i>
+                Explore More Opportunities
+            </button>
         </div>
 
         <!-- Detailed Learning View (Hidden by default) -->
@@ -473,10 +711,94 @@
         </div>
     </footer>
 
+    <!-- SkillsMatch Modal -->
+    <div id="skillsMatchModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-fire text-3xl"></i>
+                        <h2 class="text-3xl font-bold">SkillsMatch</h2>
+                    </div>
+                    <button onclick="closeSkillsMatch()" class="text-white hover:text-gray-200 text-3xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="text-purple-100 mt-2">Discover opportunities matched to your profile</p>
+            </div>
+
+            <!-- Card Container -->
+            <div class="relative h-[500px] bg-gray-50">
+                <div id="cardStack" class="absolute inset-0 flex items-center justify-center p-8">
+                    <!-- Cards will be inserted here by JavaScript -->
+                </div>
+
+                <!-- No More Cards Message -->
+                <div id="noMoreCards" class="hidden absolute inset-0 flex flex-col items-center justify-center p-8">
+                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">All Caught Up!</h3>
+                    <p class="text-gray-600 text-center mb-6">You've reviewed all available opportunities</p>
+                    <button onclick="closeSkillsMatch()" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="bg-gray-100 p-6 border-t-2 border-gray-200">
+                <div class="flex items-center justify-center gap-8 text-sm">
+                    <div class="flex items-center gap-2 text-gray-600">
+                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <span>Drag Left: Not Interested</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-600">
+                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Drag Right: Interested</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- High Compatibility Popup -->
+    <div id="highCompatPopup" class="hidden fixed inset-0 bg-black bg-opacity-75 z-[60] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center">
+            <div class="text-6xl mb-4">🎯</div>
+            <h3 class="text-3xl font-bold text-gray-800 mb-2">Highly Compatible! 😏</h3>
+            <p class="text-xl text-gray-600 mb-4">You're <span id="compatScore" class="font-bold text-purple-600">92%</span> ready for this opportunity!</p>
+            
+            <div class="bg-purple-50 rounded-xl p-4 mb-6 text-left">
+                <p class="font-bold text-red-600 mb-2 flex items-center gap-2 text-lg">
+                    ‼️ Missing Skills:
+                </p>
+                <ul id="missingSkills" class="space-y-1 text-sm text-gray-600">
+                    <!-- Will be populated by JavaScript -->
+                </ul>
+                <p class="text-sm text-purple-600 font-semibold mt-3">
+                    Estimated Learning Time: <span id="learningTime">4 weeks</span>
+                </p>
+            </div>
+
+            <button onclick="generatePathFromMatch()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-lg font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg mb-3">
+                <i class="fas fa-rocket"></i> Generate Learning Path
+            </button>
+            <button onclick="closeHighCompatPopup()" class="w-full bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
+                Continue Browsing
+            </button>
+        </div>
+    </div>
+
     <script>
-        const API_URL = 'http://localhost:5000/api';
+        const API_URL = 'http://localhost:5001/api';
         let currentEmployee = null;
         let currentLearningPath = null;
+        let currentCardIndex = 0;
+        let opportunities = [];
 
         // Dark Mode Toggle Function
         function toggleDarkMode() {
@@ -875,6 +1197,372 @@
             document.getElementById('resultsCard').classList.remove('hidden');
             document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
         }
+
+        // SkillsMatch Data
+        opportunities = [
+            {
+                id: 1,
+                title: "Tuas Port Automation - NextGen Terminal",
+                compatibility: 92,
+                duration: "6 months",
+                team: "12 people",
+                impact: "High",
+                skills: [
+                    { name: "Cloud Architecture", has: true },
+                    { name: "IoT Systems", has: true },
+                    { name: "Edge Computing", has: false }
+                ],
+                description: "Lead the development of automated terminal systems for Tuas Port Phase 2. Work with cutting-edge IoT and cloud technologies."
+            },
+            {
+                id: 2,
+                title: "PORTNET 2.0 Modernization Initiative",
+                compatibility: 68,
+                duration: "4 months",
+                team: "8 people",
+                impact: "Medium",
+                skills: [
+                    { name: "API Design", has: true },
+                    { name: "Microservices", has: false },
+                    { name: "DevOps", has: false }
+                ],
+                description: "Modernize PSA's port community system with microservices architecture and API-first design."
+            },
+            {
+                id: 3,
+                title: "Cybersecurity Infrastructure Uplift",
+                compatibility: 45,
+                duration: "3 months",
+                team: "6 people",
+                impact: "High",
+                skills: [
+                    { name: "Network Security", has: false },
+                    { name: "Threat Analysis", has: false },
+                    { name: "Risk Management", has: false }
+                ],
+                description: "Strengthen PSA's cybersecurity posture across all global terminals with zero-trust architecture."
+            }
+        ];
+
+        // Open SkillsMatch Modal
+        function openSkillsMatch() {
+            if (!currentEmployee) {
+                alert('Please select an employee first');
+                return;
+            }
+            
+            currentCardIndex = 0;
+            document.getElementById('skillsMatchModal').classList.remove('hidden');
+            renderCard();
+        }
+
+        // Close SkillsMatch Modal
+        function closeSkillsMatch() {
+            document.getElementById('skillsMatchModal').classList.add('hidden');
+            document.getElementById('noMoreCards').classList.add('hidden');
+        }
+
+        // Render Current Card
+        function renderCard() {
+            const cardStack = document.getElementById('cardStack');
+            
+            if (currentCardIndex >= opportunities.length) {
+                cardStack.innerHTML = '';
+                document.getElementById('noMoreCards').classList.remove('hidden');
+                return;
+            }
+
+            const opp = opportunities[currentCardIndex];
+            
+            const compatColor = opp.compatibility >= 90 ? 'text-green-600' : opp.compatibility >= 70 ? 'text-yellow-600' : 'text-orange-600';
+            
+            cardStack.innerHTML = `
+                <div id="currentCard" class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 cursor-grab active:cursor-grabbing transition-transform">
+                    <!-- Compatibility Badge -->
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-4xl font-bold ${compatColor}">${opp.compatibility}%</span>
+                        <div class="text-right">
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold">
+                                ${opp.duration}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title -->
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">${opp.title}</h3>
+                    
+                    <!-- Description -->
+                    <p class="text-gray-600 mb-4">${opp.description}</p>
+
+                    <!-- Skills -->
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800 mb-2">Skills Required:</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${opp.skills.map(skill => `
+                                <span class="px-3 py-1 rounded-full text-sm font-semibold ${skill.has ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">
+                                    ${skill.has ? '✓' : '⚠'} ${skill.name}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="flex items-center gap-4 text-sm text-gray-600">
+                        <span><i class="fas fa-users"></i> ${opp.team}</span>
+                        <span><i class="fas fa-chart-line"></i> ${opp.impact} Impact</span>
+                    </div>
+
+                    <!-- Swipe Instruction -->
+                    <div class="mt-6 pt-4 border-t-2 border-gray-200 text-center text-sm text-gray-500">
+                        👈 Drag left to pass • Drag right if interested 👉
+                    </div>
+                </div>
+            `;
+
+            setupCardDrag();
+        }
+
+        // Setup Card Dragging
+        function setupCardDrag() {
+            const card = document.getElementById('currentCard');
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+
+            card.addEventListener('mousedown', dragStart);
+            card.addEventListener('touchstart', dragStart);
+
+            function dragStart(e) {
+                isDragging = true;
+                startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+                card.style.transition = 'none';
+
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('touchmove', drag);
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchend', dragEnd);
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                
+                currentX = (e.type === 'mousemove' ? e.clientX : e.touches[0].clientX) - startX;
+                const rotation = currentX / 20;
+                
+                card.style.transform = `translateX(${currentX}px) rotate(${rotation}deg)`;
+                
+                // Visual feedback
+                if (currentX > 50) {
+                    card.style.borderColor = '#10b981'; // Green
+                } else if (currentX < -50) {
+                    card.style.borderColor = '#ef4444'; // Red
+                } else {
+                    card.style.borderColor = 'transparent';
+                }
+            }
+
+            function dragEnd() {
+                isDragging = false;
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('touchmove', drag);
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchend', dragEnd);
+
+                if (Math.abs(currentX) > 100) {
+                    // Swiped far enough
+                    const direction = currentX > 0 ? 'right' : 'left';
+                    card.style.transition = 'transform 0.3s ease';
+                    card.style.transform = `translateX(${currentX > 0 ? 1000 : -1000}px) rotate(${currentX > 0 ? 45 : -45}deg)`;
+                    
+                    setTimeout(() => {
+                        handleSwipe(direction);
+                    }, 300);
+                } else {
+                    // Return to center
+                    card.style.transition = 'transform 0.3s ease';
+                    card.style.transform = 'translateX(0) rotate(0)';
+                    card.style.borderColor = 'transparent';
+                }
+            }
+        }
+
+        // Handle Swipe
+        function handleSwipe(direction) {
+            const opp = opportunities[currentCardIndex];
+            
+            if (direction === 'right' && opp.compatibility >= 90) {
+                // Show high compatibility popup
+                showHighCompatPopup(opp);
+            } else {
+                // Move to next card
+                currentCardIndex++;
+                renderCard();
+            }
+        }
+
+        // Show High Compatibility Popup
+        function showHighCompatPopup(opp) {
+            document.getElementById('compatScore').textContent = opp.compatibility + '%';
+            
+            const missingSkills = opp.skills.filter(s => !s.has);
+            document.getElementById('missingSkills').innerHTML = missingSkills.map(skill => 
+                `<li class="flex items-center gap-2"><i class="fas fa-arrow-right text-purple-600"></i> ${skill.name}</li>`
+            ).join('');
+            
+            document.getElementById('learningTime').textContent = '4 weeks';
+            document.getElementById('highCompatPopup').classList.remove('hidden');
+        }
+
+        // Close High Compat Popup
+        function closeHighCompatPopup() {
+            document.getElementById('highCompatPopup').classList.add('hidden');
+            currentCardIndex++;
+            renderCard();
+        }
+
+        // Generate Learning Path from Match
+        async function generatePathFromMatch() {
+            const opp = opportunities[currentCardIndex];
+            const missingSkills = opp.skills.filter(s => !s.has).map(s => s.name);
+            
+            // Close popups
+            document.getElementById('highCompatPopup').classList.add('hidden');
+            document.getElementById('skillsMatchModal').classList.add('hidden');
+            
+            // Show loading
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('loading').scrollIntoView({ behavior: 'smooth' });
+            
+            try {
+                const response = await fetch(`${API_URL}/analyze-opportunity`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        employee_id: currentEmployee.employee_id,
+                        opportunity_title: opp.title,
+                        missing_skills: missingSkills
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Analysis failed');
+                }
+
+                const result = await response.json();
+                displayOpportunityResults(result, opp);
+            } catch (error) {
+                alert('Error: ' + error.message);
+                console.error(error);
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        // Display Opportunity-Focused Results
+        function displayOpportunityResults(data, opp) {
+            // Hide regular results, show opportunity results
+            document.getElementById('resultsCard').classList.add('hidden');
+            document.getElementById('opportunityResultsCard').classList.remove('hidden');
+            
+            // Set opportunity title
+            document.getElementById('oppTitle').textContent = data.opportunity_title;
+            document.getElementById('oppCompatibility').textContent = opp.compatibility + '%';
+            document.getElementById('oppReadiness').textContent = data.readiness_assessment;
+            document.getElementById('oppTimeToReady').textContent = data.time_to_ready;
+            
+            // Display learning steps
+            document.getElementById('oppLearningSteps').innerHTML = data.learning_steps.map((step, i) => `
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-600">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-2xl font-bold text-gray-800">${step.skill}</h4>
+                        <span class="bg-purple-100 text-purple-700 px-4 py-2 rounded-full font-semibold">${step.timeline}</span>
+                    </div>
+                    
+                    <!-- Week by Week -->
+                    <div class="space-y-3 mb-4">
+                        <p class="font-semibold text-gray-700">📅 Week-by-Week Plan:</p>
+                        ${step.week_by_week.map(week => `
+                            <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg p-5 border-l-4 border-purple-600 shadow-md hover:shadow-lg transition">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">
+                                        ${week.week}
+                                    </div>
+                                    <h5 class="font-bold text-gray-900 text-lg">${week.focus}</h5>
+                                </div>
+                                <ul class="space-y-2 ml-13 mb-3">
+                                    ${week.activities.map(activity => `
+                                        <li class="flex items-start gap-2 text-gray-900">
+                                            <i class="fas fa-check-circle text-purple-600 mt-1 flex-shrink-0"></i>
+                                            <span class="font-medium">${activity}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                                <div class="ml-13 bg-purple-50 rounded-lg p-3 border-2 border-purple-300">
+                                    <p class="text-sm font-semibold text-purple-700 flex items-center gap-2">
+                                        <i class="fas fa-flag-checkered"></i> 
+                                        ${week.deliverable}
+                                    </p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Resources -->
+                    <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                        <p class="font-semibold text-black mb-2">📚 Learning Resources:</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${step.resources.map(resource => `
+                                <span class="bg-white border-2 border-green-300 px-3 py-2 rounded-lg text-sm font-semibold text-white">
+                                    <i class="fas fa-book text-green-600"></i> ${resource}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+            `).join('');
+            
+            // Quick Wins
+            document.getElementById('oppQuickWins').innerHTML = data.quick_wins.map((win, i) => `
+                <li class="flex items-start gap-3 bg-white p-4 rounded-lg shadow">
+                    <div class="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
+                        ${i + 1}
+                    </div>
+                    <span class="text-gray-700">${win}</span>
+                </li>
+            `).join('');
+            
+            // Success Metrics
+            document.getElementById('oppSuccessMetrics').innerHTML = data.success_metrics.map((metric, i) => `
+                <div class="flex items-start gap-3 bg-white border-l-4 border-green-500 p-4 rounded-lg shadow">
+                    <i class="fas fa-trophy text-green-600 text-xl mt-1"></i>
+                    <span class="text-gray-700">${metric}</span>
+                </div>
+            `).join('');
+            
+            // Next Step
+            document.getElementById('oppNextStep').textContent = data.next_step;
+            
+            // Scroll to results
+            setTimeout(() => {
+                document.getElementById('opportunityResultsCard').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // Back to Employee View
+        function backToEmployeeView() {
+            document.getElementById('opportunityResultsCard').classList.add('hidden');
+            document.getElementById('profileCard').classList.remove('hidden');
+            document.getElementById('profileCard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Back to SkillsMatch
+        function backToSkillsMatch() {
+            document.getElementById('opportunityResultsCard').classList.add('hidden');
+            currentCardIndex++;
+            openSkillsMatch();
+        }
+
+
 
         loadEmployees();
     </script>
