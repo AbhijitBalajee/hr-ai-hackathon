@@ -33,131 +33,59 @@
         .psa-accent-bg {
             background-color: #00a8e1;
         }
-        .page-transition {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .page-hidden {
-            opacity: 0;
-            transform: translateX(20px);
-            pointer-events: none;
-            position: absolute;
-        }
-        .page-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .week-card {
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .week-card:hover {
-            transform: translateX(8px);
-            border-left-width: 6px;
-        }
-        /* Dark Mode Styles */
+        
+        /* Dark Mode */
         body.dark {
             background-color: #0f172a !important;
             color: #e2e8f0;
         }
-        .dark .bg-gray-50 {
-            background-color: #1e293b !important;
-        }
-        .dark .bg-white {
-            background-color: #1e293b !important;
-        }
-        .dark .text-gray-800 {
-            color: #e2e8f0 !important;
-        }
-        .dark .text-gray-700 {
-            color: #cbd5e1 !important;
-        }
-        .dark .text-gray-600 {
-            color: #94a3b8 !important;
-        }
-        .dark .text-gray-500 {
-            color: #64748b !important;
-        }
-        .dark .text-gray-400 {
-            color: #94a3b8 !important;
-        }
-        .dark .text-gray-300 {
-            color: #cbd5e1 !important;
-        }
-        .dark .border-gray-300 {
-            border-color: #334155 !important;
-        }
-        .dark .border-gray-200 {
-            border-color: #334155 !important;
-        }
-        .dark .bg-gray-100 {
-            background-color: #334155 !important;
-        }
-        .dark .bg-gray-200 {
-            background-color: #475569 !important;
-        }
-        .dark input, .dark select {
-            background-color: #334155 !important;
-            color: #e2e8f0 !important;
+        .dark .bg-gray-50 { background-color: #1e293b !important; }
+        .dark .bg-white { background-color: #1e293b !important; }
+        .dark .text-gray-800 { color: #e2e8f0 !important; }
+        .dark .text-gray-700 { color: #cbd5e1 !important; }
+        .dark .text-gray-600 { color: #94a3b8 !important; }
+        .dark .text-gray-500 { color: #64748b !important; }
+        .dark .border-gray-300 { border-color: #334155 !important; }
+        .dark input, .dark select, .dark textarea { 
+            background-color: #334155 !important; 
+            color: #e2e8f0 !important; 
             border-color: #475569 !important;
         }
-        .dark .from-gray-50 {
-            --tw-gradient-from: #1e293b !important;
+        
+        /* Interactive elements */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0); }
+            50% { box-shadow: 0 0 20px 5px rgba(147, 51, 234, 0.3); }
         }
-        .dark .to-gray-100 {
-            --tw-gradient-to: #334155 !important;
+        .interactive-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .dark .to-gray-200 {
-            --tw-gradient-to: #475569 !important;
+        .interactive-card:hover {
+            animation: pulse-glow 2s infinite;
         }
-        .dark .from-gray-100 {
-            --tw-gradient-from: #334155 !important;
+        
+        /* Upload zone */
+        .upload-zone {
+            border: 3px dashed #cbd5e1;
+            transition: all 0.3s ease;
         }
-        /* Dark mode for gradient backgrounds */
-        .dark .from-purple-50 {
-            --tw-gradient-from: #312e81 !important;
+        .upload-zone.dragover {
+            border-color: #9333ea;
+            background-color: #f3e8ff;
         }
-        .dark .to-pink-50 {
-            --tw-gradient-to: #831843 !important;
+        .upload-zone:hover {
+            border-color: #7c3aed;
         }
-        .dark .from-green-50 {
-            --tw-gradient-from: #064e3b !important;
-        }
-        .dark .to-emerald-50 {
-            --tw-gradient-to: #065f46 !important;
-        }
-        .dark .from-orange-50 {
-            --tw-gradient-from: #7c2d12 !important;
-        }
-        .dark .to-amber-50 {
-            --tw-gradient-to: #78350f !important;
-        }
-        .dark .from-blue-50 {
-            --tw-gradient-from: #1e3a8a !important;
-        }
-        .dark .to-indigo-50 {
-            --tw-gradient-to: #312e81 !important;
-        }
-        /* Preserve gradient cards */
-        .dark .from-gray-800 {
-            --tw-gradient-from: #1f2937 !important;
-        }
-        .dark .to-gray-900 {
-            --tw-gradient-to: #111827 !important;
-        }
-        .dark .from-red-500, .dark .from-yellow-500, .dark .from-green-500,
-        .dark .from-purple-500, .dark .from-blue-600, .dark .to-indigo-700 {
-            /* Keep original vibrant colors for accent gradients */
-        }
-        #darkModeToggle {
-            transition: transform 0.3s ease;
-        }
-        #darkModeToggle:hover {
-            transform: scale(1.1);
+        
+        /* Modal backdrop */
+        .modal-backdrop {
+            backdrop-filter: blur(8px);
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header with PSA Branding -->
+    <!-- Header -->
     <div class="gradient-bg text-white shadow-2xl">
         <div class="container mx-auto px-6 py-8">
             <div class="flex items-center justify-between">
@@ -169,7 +97,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <button id="darkModeToggle" onclick="toggleDarkMode()" class="text-3xl text-white hover:text-blue-400 transition cursor-pointer" title="Toggle Dark Mode">
+                    <button id="darkModeToggle" onclick="toggleDarkMode()" class="text-3xl text-white hover:text-blue-400 transition" title="Toggle Dark Mode">
                         <i id="darkModeIcon" class="fas fa-moon"></i>
                     </button>
                     <div class="text-right">
@@ -182,7 +110,7 @@
     </div>
 
     <div class="container mx-auto px-6 py-8 max-w-7xl">
-        <!-- Employee Selector Card -->
+        <!-- Employee Selector -->
         <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 card-hover border-l-4 border-gray-800">
             <div class="flex items-center gap-3 mb-4">
                 <i class="fas fa-user-circle text-3xl text-gray-800"></i>
@@ -193,7 +121,7 @@
             </select>
         </div>
 
-        <!-- Quick Stats Dashboard -->
+        <!-- Quick Stats -->
         <div id="statsCard" class="hidden mb-6">
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                 <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-t-4 border-gray-800">
@@ -244,7 +172,7 @@
             </div>
         </div>
 
-        <!-- Skills Coverage Card -->
+        <!-- Skills Coverage -->
         <div id="skillsCoverageCard" class="bg-white rounded-2xl shadow-lg p-6 mb-6 card-hover border-l-4 border-purple-600 hidden">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-3">
@@ -253,7 +181,6 @@
                 </div>
                 <span id="coveragePercent" class="text-3xl font-bold text-purple-600">0%</span>
             </div>
-            
             <div class="grid md:grid-cols-3 gap-4 mb-4">
                 <div class="bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl p-4 text-center">
                     <p class="text-sm text-gray-600 mb-1">Your Skills</p>
@@ -268,7 +195,6 @@
                     <p id="recommendedCount" class="text-3xl font-bold text-green-600">0</p>
                 </div>
             </div>
-            
             <div class="bg-gray-50 rounded-xl p-4">
                 <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
                     <i class="fas fa-lightbulb text-yellow-500"></i>
@@ -278,7 +204,7 @@
             </div>
         </div>
 
-        <!-- Current Profile Card -->
+        <!-- Current Profile -->
         <div id="profileCard" class="bg-white rounded-2xl shadow-lg p-6 mb-6 card-hover border-l-4 border-gray-800 hidden">
             <div class="flex items-center gap-3 mb-4">
                 <i class="fas fa-briefcase text-3xl text-gray-800"></i>
@@ -286,42 +212,95 @@
             </div>
             
             <div id="profileContent" class="mb-6"></div>
+
+            <!-- RESUME UPLOAD SECTION -->
+            <div class="mt-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-file-upload text-3xl text-blue-600"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Update Your Profile with Resume</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Upload your latest resume and let AI automatically detect and add new skills, projects, and experience</p>
+                
+                <!-- Upload Zone -->
+                <div id="uploadZone" class="upload-zone bg-white rounded-xl p-8 text-center cursor-pointer" onclick="document.getElementById('resumeFile').click()">
+                    <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" class="hidden" onchange="handleFileSelect(event)">
+                    <i class="fas fa-cloud-upload-alt text-6xl text-blue-400 mb-4"></i>
+                    <p class="text-lg font-semibold text-gray-800 mb-2">Drag & Drop your resume here</p>
+                    <p class="text-sm text-gray-500 mb-4">or click to browse</p>
+                    <p class="text-xs text-gray-400">Supports: PDF, DOC, DOCX (Max 5MB)</p>
+                </div>
+                
+                <!-- Upload Progress -->
+                <div id="uploadProgress" class="hidden mt-4">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="fas fa-file-alt text-blue-600"></i>
+                        <span id="fileName" class="font-semibold text-gray-800"></span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-3 overflow-hidden">
+                        <div id="progressBar" class="bg-blue-600 h-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p id="uploadStatus" class="text-sm text-gray-600 mt-2">Processing your resume...</p>
+                </div>
+                
+                <!-- Results -->
+                <div id="uploadResults" class="hidden mt-4 bg-white rounded-xl p-6 border-2 border-green-200">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fas fa-check-circle text-3xl text-green-600"></i>
+                        <h4 class="text-xl font-bold text-gray-800">Profile Updated Successfully!</h4>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <p class="text-sm text-gray-600 mb-1">New Skills Detected</p>
+                            <p id="newSkillsCount" class="text-3xl font-bold text-green-600">0</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <p class="text-sm text-gray-600 mb-1">Experience Updated</p>
+                            <p id="experienceUpdated" class="text-3xl font-bold text-blue-600">✓</p>
+                        </div>
+                    </div>
+                    <div id="detectedSkills" class="mb-4">
+                        <p class="font-semibold text-gray-800 mb-2">Skills Added:</p>
+                        <div id="skillsList" class="flex flex-wrap gap-2"></div>
+                    </div>
+                    <button onclick="refreshProfile()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">
+                        <i class="fas fa-sync-alt"></i> Refresh Profile to See Updates
+                    </button>
+                </div>
+            </div>
             
             <!-- Career Goals Input -->
-            <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 border-2 border-gray-200">
+            <div class="mt-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 border-2 border-gray-200">
                 <label class="flex items-center gap-2 text-lg font-bold text-gray-800 mb-3">
                     <i class="fas fa-bullseye text-gray-800"></i>
                     Career Aspiration
                 </label>
                 <input type="text" id="targetRole" 
-                       placeholder="e.g., Chief Technology Officer, VP Operations, Head of Innovation"
+                       placeholder="e.g., Chief Technology Officer, VP Operations"
                        class="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:border-gray-800 focus:ring-4 focus:ring-gray-200 transition mb-4">
-                
                 <button onclick="analyzeCareer()" 
                         class="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white py-4 rounded-xl text-lg font-bold hover:from-gray-900 hover:to-black transition shadow-lg flex items-center justify-center gap-3">
                     <i class="fas fa-robot text-2xl"></i>
                     Generate AI Career Roadmap
                 </button>
-                
-                <div class="mt-4 pt-4 border-t-2 border-gray-300">
-                    <button onclick="openSkillsMatch()" 
-                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-lg font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg flex items-center justify-center gap-3">
-                        <i class="fas fa-fire text-2xl"></i>
-                        🔍 Discover Your Next Opportunity
-                    </button>
-                    <p class="text-sm text-gray-500 text-center mt-2">
-                        Swipe through PSA opportunities matched to your skills
-                    </p>
-                </div>
+<div class="mt-4 pt-4 border-t-2 border-gray-300">
+    <button onclick="openSkillsMatch()" 
+            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-lg font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg flex items-center justify-center gap-3">
+        <i class="fas fa-fire text-2xl"></i>
+        🔍 Discover Your Next Opportunity
+    </button>
+    <p class="text-sm text-gray-500 text-center mt-2">
+        Swipe through PSA opportunities matched to your skills
+    </p>
+</div>
             </div>
         </div>
 
-        <!-- Loading State -->
+        <!-- Loading -->
         <div id="loading" class="hidden bg-white rounded-2xl shadow-lg p-12 text-center border-l-4 border-gray-800">
             <div class="inline-block">
                 <i class="fas fa-cog fa-spin text-6xl text-gray-800 mb-4"></i>
                 <p class="text-2xl text-gray-800 font-bold">AI Analysis in Progress...</p>
-                <p class="text-gray-500 mt-2">Analyzing career path, skill gaps, leadership potential & opportunities</p>
+                <p class="text-gray-500 mt-2">Analyzing career path, skill gaps & opportunities</p>
             </div>
         </div>
 
@@ -351,164 +330,323 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Business Impact ROI Card -->
-            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8 border-2 border-blue-400">
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fas fa-chart-line text-4xl"></i>
-                    <h2 class="text-3xl font-bold">Career Investment ROI</h2>
-                </div>
-                
-                <div class="grid md:grid-cols-4 gap-6">
-                    <!-- Cost Savings -->
-                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i class="fas fa-dollar-sign text-3xl text-green-300"></i>
-                            <div>
-                                <p class="text-sm text-blue-100 font-semibold">Cost Savings</p>
-                                <p class="text-3xl font-bold">$12,500</p>
-                            </div>
-                        </div>
-                        <p class="text-sm text-blue-100">vs. External Hire Cost</p>
-                    </div>
-
-                    <!-- Time to Competency -->
-                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i class="fas fa-clock text-3xl text-yellow-300"></i>
-                            <div>
-                                <p class="text-sm text-blue-100 font-semibold">Time to Promotion</p>
-                                <p class="text-3xl font-bold">8 months</p>
-                            </div>
-                        </div>
-                        <p class="text-sm text-blue-100">vs. Industry Avg: 18 months</p>
-                    </div>
-
-                    <!-- Retention Impact -->
-                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i class="fas fa-chart-line text-3xl text-purple-300"></i>
-                            <div>
-                                <p class="text-sm text-blue-100 font-semibold">Retention Boost</p>
-                                <p class="text-3xl font-bold">+45%</p>
-                            </div>
-                        </div>
-                        <p class="text-sm text-blue-100">With clear career path</p>
-                    </div>
-
-                    <!-- Skills Coverage -->
-                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i class="fas fa-trophy text-3xl text-orange-300"></i>
-                            <div>
-                                <p class="text-sm text-blue-100 font-semibold">Skills Coverage</p>
-                                <p class="text-3xl font-bold">87%</p>
-                            </div>
-                        </div>
-                        <p class="text-sm text-blue-100">↑ from 64%</p>
-                    </div>
-                </div>
-
-                <div class="mt-6 bg-white bg-opacity-10 rounded-xl p-4">
-                    <p class="text-sm text-blue-100 flex items-center gap-2">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Following this personalized roadmap maximizes ROI and accelerates your career trajectory at PSA</span>
-                    </p>
+<!-- Business Impact ROI Card -->
+<div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8 border-2 border-blue-400">
+    <div class="flex items-center gap-3 mb-6">
+        <i class="fas fa-chart-line text-4xl"></i>
+        <h2 class="text-3xl font-bold">Career Investment ROI</h2>
+    </div>
+    
+    <div class="grid md:grid-cols-4 gap-6">
+        <!-- Cost Savings -->
+        <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+            <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-dollar-sign text-3xl text-green-300"></i>
+                <div>
+                    <p class="text-sm text-blue-100 font-semibold">Cost Savings</p>
+                    <p class="text-3xl font-bold">$12,500</p>
                 </div>
             </div>
+            <p class="text-sm text-blue-100">vs. External Hire Cost</p>
+        </div>
 
-            <!-- Skill Gaps -->
+        <!-- Time to Competency -->
+        <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+            <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-clock text-3xl text-yellow-300"></i>
+                <div>
+                    <p class="text-sm text-blue-100 font-semibold">Time to Promotion</p>
+                    <p class="text-3xl font-bold">8 months</p>
+                </div>
+            </div>
+            <p class="text-sm text-blue-100">vs. Industry Avg: 18 months</p>
+        </div>
+
+        <!-- Retention Impact -->
+        <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+            <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-chart-line text-3xl text-purple-300"></i>
+                <div>
+                    <p class="text-sm text-blue-100 font-semibold">Retention Boost</p>
+                    <p class="text-3xl font-bold">+45%</p>
+                </div>
+            </div>
+            <p class="text-sm text-blue-100">With clear career path</p>
+        </div>
+
+        <!-- Skills Coverage -->
+        <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+            <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-trophy text-3xl text-orange-300"></i>
+                <div>
+                    <p class="text-sm text-blue-100 font-semibold">Skills Coverage</p>
+                    <p class="text-3xl font-bold">87%</p>
+                </div>
+            </div>
+            <p class="text-sm text-blue-100">↑ from 64%</p>
+        </div>
+    </div>
+
+    <div class="mt-6 bg-white bg-opacity-10 rounded-xl p-4">
+        <p class="text-sm text-blue-100 flex items-center gap-2">
+            <i class="fas fa-info-circle"></i>
+            <span>Following this personalized roadmap maximizes ROI and accelerates your career trajectory at PSA</span>
+        </p>
+    </div>
+</div>
+
+            <!-- Priority Skills Development (INTERACTIVE) -->
             <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-red-600">
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fas fa-target text-3xl text-red-600"></i>
-                    <h2 class="text-3xl font-bold text-gray-800">Priority Skills Development</h2>
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-target text-3xl text-red-600"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">Priority Skills Development</h2>
+                    </div>
+                    <span class="text-sm text-gray-500 flex items-center gap-2">
+                        <i class="fas fa-hand-pointer"></i>
+                        Click any skill to explore
+                    </span>
                 </div>
                 <div id="skillGaps" class="grid md:grid-cols-3 gap-4"></div>
             </div>
+<!-- Progress & Achievements -->
+<div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-2xl shadow-lg p-8 border-2 border-purple-400">
+    <div class="flex items-center gap-3 mb-6">
+        <i class="fas fa-trophy text-4xl"></i>
+        <h2 class="text-3xl font-bold">Your Progress & Achievements</h2>
+    </div>
 
-            <!-- Progress & Achievements -->
-            <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-2xl shadow-lg p-8 border-2 border-purple-400">
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- Progress Tracker -->
+        <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold flex items-center gap-2">
+                    <i class="fas fa-calendar-check"></i>
+                    Learning Journey
+                </h3>
+                <span class="text-2xl font-bold">Week 2 of 12</span>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="bg-white bg-opacity-20 rounded-full h-4 mb-4">
+                <div class="bg-white rounded-full h-4" style="width: 17%"></div>
+            </div>
+            
+            <div class="flex items-center gap-2 text-sm">
+                <i class="fas fa-fire text-orange-300"></i>
+                <span>On track! Keep up the momentum ✨</span>
+            </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-award"></i>
+                Achievements Unlocked
+            </h3>
+            
+            <div class="space-y-3">
+                <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                    <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-2xl">
+                        ⚡
+                    </div>
+                    <div class="flex-grow">
+                        <p class="font-bold text-sm">Fast Starter</p>
+                        <p class="text-xs text-purple-100">Started learning within 24 hours</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                    <div class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-2xl">
+                        🔥
+                    </div>
+                    <div class="flex-grow">
+                        <p class="font-bold text-sm">5-Day Streak</p>
+                        <p class="text-xs text-purple-100">Consistent learning momentum</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                    <div class="w-10 h-10 bg-green-400 rounded-full flex items-center justify-center text-2xl">
+                        📚
+                    </div>
+                    <div class="flex-grow">
+                        <p class="font-bold text-sm">Module Complete</p>
+                        <p class="text-xs text-purple-100">Cloud Fundamentals finished</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="mt-6 grid grid-cols-3 gap-4">
+        <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
+            <p class="text-3xl font-bold mb-1">12</p>
+            <p class="text-sm text-purple-100">Hours Invested</p>
+        </div>
+        <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
+            <p class="text-3xl font-bold mb-1">3/8</p>
+            <p class="text-sm text-purple-100">Skills Mastered</p>
+        </div>
+        <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
+            <p class="text-3xl font-bold mb-1">87%</p>
+            <p class="text-sm text-purple-100">Completion Rate</p>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Success Stories Section - ANONYMOUS VERSION -->
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl shadow-lg p-8">
                 <div class="flex items-center gap-3 mb-6">
-                    <i class="fas fa-trophy text-4xl"></i>
-                    <h2 class="text-3xl font-bold">Your Progress & Achievements</h2>
+                    <i class="fas fa-trophy text-3xl text-green-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">PSA Success Stories</h2>
                 </div>
-
+                <p class="text-gray-600 mb-6">Real examples of employees who successfully transitioned to new roles at PSA</p>
+                
                 <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Progress Tracker -->
-                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-bold flex items-center gap-2">
-                                <i class="fas fa-calendar-check"></i>
-                                Learning Journey
-                            </h3>
-                            <span class="text-2xl font-bold">Week 2 of 12</span>
+                    <!-- Story 1 - Anonymous -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">PSA Employee</h4>
+                                <p class="text-sm text-gray-600">Engineering Division • 8 months journey</p>
+                            </div>
                         </div>
-                        
-                        <!-- Progress Bar -->
-                        <div class="bg-white bg-opacity-20 rounded-full h-4 mb-4">
-                            <div class="bg-white rounded-full h-4" style="width: 17%"></div>
+                        <div class="mb-4">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                                <span class="font-semibold">From:</span> Systems Engineer
+                            </div>
+                            <i class="fas fa-arrow-down text-green-600 my-2"></i>
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <span class="font-semibold">To:</span> Cloud Solutions Architect
+                            </div>
                         </div>
-                        
-                        <div class="flex items-center gap-2 text-sm">
-                            <i class="fas fa-fire text-orange-300"></i>
-                            <span>On track! Keep up the momentum ✨</span>
+                        <div class="bg-green-50 rounded-lg p-3 mb-3">
+                            <p class="text-xs text-gray-600 font-semibold mb-2">Skills Developed:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-green-700">Cloud Architecture</span>
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-green-700">DevOps</span>
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-green-700">Security</span>
+                            </div>
                         </div>
+                        <blockquote class="text-sm text-gray-700 italic border-l-4 border-green-500 pl-3">
+                            "The structured learning path made it achievable. I could see my progress every week and stay motivated."
+                        </blockquote>
                     </div>
 
-                    <!-- Achievements -->
-                    <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
-                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                            <i class="fas fa-award"></i>
-                            Achievements Unlocked
-                        </h3>
-                        
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
-                                <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-2xl">
-                                    ⚡
-                                </div>
-                                <div class="flex-grow">
-                                    <p class="font-bold text-sm">Fast Starter</p>
-                                    <p class="text-xs text-purple-100">Started learning within 24 hours</p>
-                                </div>
+                    <!-- Story 2 - Anonymous -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-user-secret"></i>
                             </div>
-
-                            <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
-                                <div class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-2xl">
-                                    🔥
-                                </div>
-                                <div class="flex-grow">
-                                    <p class="font-bold text-sm">5-Day Streak</p>
-                                    <p class="text-xs text-purple-100">Consistent learning momentum</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
-                                <div class="w-10 h-10 bg-green-400 rounded-full flex items-center justify-center text-2xl">
-                                    📚
-                                </div>
-                                <div class="flex-grow">
-                                    <p class="font-bold text-sm">Module Complete</p>
-                                    <p class="text-xs text-purple-100">Cloud Fundamentals finished</p>
-                                </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">PSA Employee</h4>
+                                <p class="text-sm text-gray-600">Finance Division • 6 months journey</p>
                             </div>
                         </div>
+                        <div class="mb-4">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                                <span class="font-semibold">From:</span> Financial Analyst
+                            </div>
+                            <i class="fas fa-arrow-down text-blue-600 my-2"></i>
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <span class="font-semibold">To:</span> Finance Manager (FP&A)
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-3">
+                            <p class="text-xs text-gray-600 font-semibold mb-2">Skills Developed:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-blue-700">Financial Modeling</span>
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-blue-700">Strategic Planning</span>
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-blue-700">Leadership</span>
+                            </div>
+                        </div>
+                        <blockquote class="text-sm text-gray-700 italic border-l-4 border-blue-500 pl-3">
+                            "PSA's mentorship program connected me with leaders who guided my transition and believed in my potential."
+                        </blockquote>
+                    </div>
+
+                    <!-- Story 3 - Anonymous -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">PSA Employee</h4>
+                                <p class="text-sm text-gray-600">Operations Division • 10 months journey</p>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                                <span class="font-semibold">From:</span> Operations Coordinator
+                            </div>
+                            <i class="fas fa-arrow-down text-purple-600 my-2"></i>
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <span class="font-semibold">To:</span> Project Manager - Automation
+                            </div>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-3 mb-3">
+                            <p class="text-xs text-gray-600 font-semibold mb-2">Skills Developed:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-purple-700">Project Management</span>
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-purple-700">Automation Systems</span>
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-purple-700">Agile</span>
+                            </div>
+                        </div>
+                        <blockquote class="text-sm text-gray-700 italic border-l-4 border-purple-500 pl-3">
+                            "I never thought I could transition to tech. The AI-guided roadmap broke it down into manageable steps."
+                        </blockquote>
+                    </div>
+
+                    <!-- Story 4 - Anonymous -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">PSA Employee</h4>
+                                <p class="text-sm text-gray-600">IT Division • 5 months journey</p>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                                <span class="font-semibold">From:</span> IT Support Specialist
+                            </div>
+                            <i class="fas fa-arrow-down text-orange-600 my-2"></i>
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <span class="font-semibold">To:</span> Cybersecurity Analyst
+                            </div>
+                        </div>
+                        <div class="bg-orange-50 rounded-lg p-3 mb-3">
+                            <p class="text-xs text-gray-600 font-semibold mb-2">Skills Developed:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-orange-700">Network Security</span>
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-orange-700">Threat Analysis</span>
+                                <span class="bg-white px-2 py-1 rounded-full text-xs font-semibold text-orange-700">Incident Response</span>
+                            </div>
+                        </div>
+                        <blockquote class="text-sm text-gray-700 italic border-l-4 border-orange-500 pl-3">
+                            "SkillsVoyage showed me I had transferable skills I didn't even realize. The roadmap gave me confidence."
+                        </blockquote>
                     </div>
                 </div>
 
-                <!-- Quick Stats -->
-                <div class="mt-6 grid grid-cols-3 gap-4">
-                    <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
-                        <p class="text-3xl font-bold mb-1">12</p>
-                        <p class="text-sm text-purple-100">Hours Invested</p>
-                    </div>
-                    <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
-                        <p class="text-3xl font-bold mb-1">3/8</p>
-                        <p class="text-sm text-purple-100">Skills Mastered</p>
-                    </div>
-                    <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center">
-                        <p class="text-3xl font-bold mb-1">87%</p>
-                        <p class="text-sm text-purple-100">Completion Rate</p>
+                <!-- Call to Action -->
+                <div class="mt-6 bg-white rounded-xl p-6 border-2 border-green-300">
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-star text-4xl text-green-600"></i>
+                        <div class="flex-grow">
+                            <h4 class="text-xl font-bold text-gray-800 mb-2">Your Success Story Starts Here</h4>
+                            <p class="text-gray-600">Join hundreds of PSA employees who have successfully transitioned to their dream roles using personalized learning paths.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -519,183 +657,113 @@
                     <i class="fas fa-road text-3xl text-blue-600"></i>
                     <h2 class="text-3xl font-bold text-gray-800">Your Learning Roadmap</h2>
                 </div>
-                <p class="text-gray-600 mb-4"><i class="fas fa-hand-pointer text-blue-600"></i> Click on any learning step below to see the detailed weekly breakdown</p>
                 <div id="learningPath" class="space-y-4"></div>
             </div>
 
-            <!-- Two Column Layout: Opportunities + Actions -->
+            <!-- Two Column: Opportunities + Actions -->
             <div class="grid md:grid-cols-2 gap-6">
-                <!-- Internal Opportunities -->
+                <!-- PSA Opportunities (CLICKABLE) -->
                 <div class="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl shadow-lg p-8">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fas fa-building text-3xl text-purple-600"></i>
-                        <h2 class="text-2xl font-bold text-gray-800">PSA Opportunities</h2>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-building text-3xl text-purple-600"></i>
+                            <h2 class="text-2xl font-bold text-gray-800">PSA Opportunities</h2>
+                        </div>
+                        <span class="text-sm text-gray-500 flex items-center gap-2">
+                            <i class="fas fa-mouse-pointer"></i>
+                            Click to explore
+                        </span>
                     </div>
                     <div id="opportunities" class="space-y-3"></div>
                 </div>
 
-                <!-- 30-Day Action Plan -->
-                <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl shadow-lg p-8">
+                <!-- 30-Day Actions -->
+                <div class="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl shadow-lg p-8">
                     <div class="flex items-center gap-3 mb-6">
-                        <i class="fas fa-calendar-check text-3xl text-green-600"></i>
+                        <i class="fas fa-calendar-check text-3xl text-orange-600"></i>
                         <h2 class="text-2xl font-bold text-gray-800">Start This Month</h2>
                     </div>
                     <ul id="next30Days" class="space-y-3"></ul>
                 </div>
             </div>
 
-            <!-- Mentorship Card -->
-            <div class="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl shadow-lg p-8">
+            <!-- Mentorship -->
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl shadow-lg p-8">
                 <div class="flex items-center gap-3 mb-4">
-                    <i class="fas fa-user-tie text-3xl text-orange-600"></i>
+                    <i class="fas fa-user-tie text-3xl text-blue-600"></i>
                     <h2 class="text-2xl font-bold text-gray-800">Recommended Mentor</h2>
                 </div>
                 <p id="mentorshipMatch" class="text-lg text-gray-700"></p>
             </div>
-        </div>
 
-        <!-- Opportunity-Focused Results -->
-        <div id="opportunityResultsCard" class="hidden space-y-6">
-            <!-- Back Button -->
-            <button onclick="backToEmployeeView()" class="flex items-center gap-2 text-gray-700 hover:text-gray-900 font-semibold mb-4 transition">
-                <i class="fas fa-arrow-left text-xl"></i>
-                <span>Back to Full Career Analysis</span>
-            </button>
+            <!-- Discussion Forum -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-indigo-600">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-comments text-3xl text-indigo-600"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">Career Community Forum</h2>
+                    </div>
+                    <button onclick="openForumModal()" class="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
+                        <i class="fas fa-plus-circle"></i> New Discussion
+                    </button>
+                </div>
+                <p class="text-gray-600 mb-6">Anonymous discussions about career development, skills, and opportunities</p>
+                
+                <div id="forumPosts" class="space-y-4">
+                    <!-- Initial forum posts -->
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border-l-4 border-indigo-500">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
+                                    <i class="fas fa-user-secret"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-800">PSA Employee</p>
+                                    <p class="text-xs text-gray-500">2 hours ago • Career Development</p>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-lg text-gray-800 mb-2">How long did it take you to transition to a leadership role?</h4>
+                        <p class="text-gray-700 mb-3">I've been at PSA for 4 years and interested in moving into a management position. What skills should I focus on?</p>
+                        <div class="flex items-center gap-4 text-sm text-gray-600">
+                            <button class="flex items-center gap-1 hover:text-indigo-600">
+                                <i class="fas fa-thumbs-up"></i> 12
+                            </button>
+                            <button class="flex items-center gap-1 hover:text-indigo-600">
+                                <i class="fas fa-comment"></i> 5 replies
+                            </button>
+                        </div>
+                    </div>
 
-            <!-- Header -->
-            <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-2xl shadow-2xl p-8">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-4xl">
-                        🎯
-                    </div>
-                    <div class="flex-grow">
-                        <p class="text-purple-100 text-sm font-semibold mb-1">FOCUSED LEARNING PATH FOR:</p>
-                        <h2 id="oppTitle" class="text-3xl font-bold"></h2>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-purple-100 text-sm mb-1">Match Score</p>
-                        <p id="oppCompatibility" class="text-4xl font-bold"></p>
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border-l-4 border-green-500">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                                    <i class="fas fa-user-secret"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-800">PSA Employee</p>
+                                    <p class="text-xs text-gray-500">5 hours ago • Skill Building</p>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-lg text-gray-800 mb-2">Best online courses for cloud certifications?</h4>
+                        <p class="text-gray-700 mb-3">Looking to get AWS certified. Any recommendations for courses that worked well for you?</p>
+                        <div class="flex items-center gap-4 text-sm text-gray-600">
+                            <button class="flex items-center gap-1 hover:text-green-600">
+                                <i class="fas fa-thumbs-up"></i> 8
+                            </button>
+                            <button class="flex items-center gap-1 hover:text-green-600">
+                                <i class="fas fa-comment"></i> 3 replies
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white bg-opacity-10 rounded-xl p-4">
-                    <p id="oppReadiness" class="text-lg"></p>
-                    <p class="text-sm text-purple-100 mt-2">
-                        <i class="fas fa-clock"></i> Time to ready: <span id="oppTimeToReady" class="font-bold"></span>
-                    </p>
-                </div>
+                
+                <button onclick="loadMorePosts()" class="w-full mt-4 bg-gray-100 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-200 transition">
+                    Load More Discussions
+                </button>
             </div>
-
-            <!-- Learning Steps -->
-            <div id="oppLearningSteps" class="space-y-6"></div>
-
-            <!-- Two Column Layout -->
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Quick Wins -->
-                <div class="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl shadow-lg p-8">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fas fa-rocket text-3xl text-orange-600"></i>
-                        <h2 class="text-2xl font-bold text-gray-800">Quick Wins This Week</h2>
-                    </div>
-                    <ul id="oppQuickWins" class="space-y-3"></ul>
-                </div>
-
-                <!-- Success Metrics -->
-                <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl shadow-lg p-8">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fas fa-trophy text-3xl text-green-600"></i>
-                        <h2 class="text-2xl font-bold text-gray-800">Success Milestones</h2>
-                    </div>
-                    <div id="oppSuccessMetrics" class="space-y-3"></div>
-                </div>
-            </div>
-
-            <!-- Next Step CTA -->
-            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8">
-                <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-4xl">
-                        ⚡
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-2xl font-bold mb-2">Your Next Step Today:</h3>
-                        <p id="oppNextStep" class="text-xl"></p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Back to Opportunities Button -->
-            <button onclick="backToSkillsMatch()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-lg font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg flex items-center justify-center gap-3">
-                <i class="fas fa-fire text-2xl"></i>
-                Explore More Opportunities
-            </button>
-        </div>
-
-        <!-- Detailed Learning View (Hidden by default) -->
-        <div id="detailedLearningView" class="hidden space-y-6">
-            <!-- Back Button -->
-            <button onclick="backToRoadmap()" class="flex items-center gap-2 text-gray-700 hover:text-gray-900 font-semibold mb-4 transition">
-                <i class="fas fa-arrow-left text-xl"></i>
-                <span>Back to Career Roadmap</span>
-            </button>
-
-            <!-- Learning Detail Header -->
-            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                        <i class="fas fa-graduation-cap text-4xl"></i>
-                    </div>
-                    <div class="flex-grow">
-                        <p class="text-blue-100 text-sm font-semibold mb-1">STEP <span id="detailStepNumber"></span> OF YOUR LEARNING JOURNEY</p>
-                        <h2 id="detailSkillName" class="text-4xl font-bold"></h2>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-blue-100 text-sm mb-1">Duration</p>
-                        <p id="detailTimeline" class="text-2xl font-bold"></p>
-                    </div>
-                </div>
-                <p id="detailAction" class="text-lg text-blue-50 mt-4"></p>
-            </div>
-
-            <!-- Resources Section -->
-            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-green-600">
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fas fa-book-open text-3xl text-green-600"></i>
-                    <h3 class="text-2xl font-bold text-gray-800">Recommended Learning Resources</h3>
-                </div>
-                <div id="detailResources" class="grid md:grid-cols-2 gap-4"></div>
-            </div>
-
-            <!-- Weekly Breakdown -->
-            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-purple-600">
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fas fa-calendar-week text-3xl text-purple-600"></i>
-                    <h3 class="text-2xl font-bold text-gray-800">Week-by-Week Learning Plan</h3>
-                </div>
-                <div id="weeklyBreakdown" class="space-y-4"></div>
-            </div>
-
-            <!-- Success Metrics -->
-            <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl shadow-lg p-8">
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fas fa-trophy text-3xl text-green-600"></i>
-                    <h3 class="text-2xl font-bold text-gray-800">Success Metrics & Milestones</h3>
-                </div>
-                <div id="successMetrics" class="space-y-3"></div>
-            </div>
-
-            <!-- Next Steps -->
-            <div class="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl shadow-lg p-8">
-                <div class="flex items-center gap-3 mb-4">
-                    <i class="fas fa-rocket text-3xl text-orange-600"></i>
-                    <h3 class="text-2xl font-bold text-gray-800">Getting Started</h3>
-                </div>
-                <div id="gettingStarted" class="space-y-3"></div>
-            </div>
-
-            <!-- Back Button (Bottom) -->
-            <button onclick="backToRoadmap()" class="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white py-4 rounded-xl text-lg font-bold hover:from-gray-900 hover:to-black transition shadow-lg flex items-center justify-center gap-3">
-                <i class="fas fa-arrow-left text-xl"></i>
-                Back to Career Roadmap Overview
-            </button>
         </div>
     </div>
 
@@ -711,85 +779,170 @@
         </div>
     </footer>
 
-    <!-- SkillsMatch Modal -->
-    <div id="skillsMatchModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
-            <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
+    <!-- Opportunity Detail Modal -->
+    <div id="opportunityModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6 rounded-t-3xl">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <i class="fas fa-fire text-3xl"></i>
-                        <h2 class="text-3xl font-bold">SkillsMatch</h2>
+                        <i class="fas fa-briefcase text-3xl"></i>
+                        <h2 id="oppModalTitle" class="text-3xl font-bold"></h2>
                     </div>
-                    <button onclick="closeSkillsMatch()" class="text-white hover:text-gray-200 text-3xl">
+                    <button onclick="closeOpportunityModal()" class="text-white hover:text-gray-200 text-3xl">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                <p class="text-purple-100 mt-2">Discover opportunities matched to your profile</p>
             </div>
-
-            <!-- Card Container -->
-            <div class="relative h-[500px] bg-gray-50">
-                <div id="cardStack" class="absolute inset-0 flex items-center justify-center p-8">
-                    <!-- Cards will be inserted here by JavaScript -->
+            
+            <div class="p-8">
+                <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-purple-700 font-semibold mb-1">YOUR COMPATIBILITY</p>
+                            <p id="oppModalCompat" class="text-6xl font-bold text-purple-600"></p>
+                        </div>
+                        <div class="w-32 h-32">
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="64" cy="64" r="56" fill="none" stroke="#e9d5ff" stroke-width="12"/>
+                                <circle id="oppCompatCircle" cx="64" cy="64" r="56" fill="none" stroke="#9333ea" stroke-width="12" 
+                                        stroke-dasharray="352" stroke-dashoffset="352" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p id="oppModalReadiness" class="text-purple-700"></p>
                 </div>
 
-                <!-- No More Cards Message -->
-                <div id="noMoreCards" class="hidden absolute inset-0 flex flex-col items-center justify-center p-8">
-                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">All Caught Up!</h3>
-                    <p class="text-gray-600 text-center mb-6">You've reviewed all available opportunities</p>
-                    <button onclick="closeSkillsMatch()" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition">
-                        Close
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i class="fas fa-info-circle text-blue-600"></i>
+                        What This Role Entails
+                    </h3>
+                    <p id="oppModalDescription" class="text-gray-700 text-lg"></p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i class="fas fa-list-check text-green-600"></i>
+                        Required Skills
+                    </h3>
+                    <div id="oppModalSkills" class="grid grid-cols-2 gap-3"></div>
+                </div>
+
+                <div class="bg-orange-50 border-2 border-orange-200 rounded-xl p-6 mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i class="fas fa-graduation-cap text-orange-600"></i>
+                        Skills You Need to Develop
+                    </h3>
+                    <div id="oppModalGaps" class="space-y-3"></div>
+                    <div class="mt-4 pt-4 border-t-2 border-orange-200">
+                        <p class="text-sm text-orange-700 flex items-center gap-2">
+                            <i class="fas fa-clock"></i>
+                            <span>Estimated learning time: <strong id="oppModalTime">6-8 weeks</strong></span>
+                        </p>
+                    </div>
+                </div>
+
+                <button onclick="generateOpportunityPath()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-xl font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg">
+                    <i class="fas fa-rocket"></i> Generate Learning Path for This Opportunity
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skill Detail Modal -->
+    <div id="skillModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-gradient-to-r from-red-500 to-pink-500 text-white p-6 rounded-t-3xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-red-100 font-semibold mb-1" id="skillModalPriority"></p>
+                        <h2 id="skillModalTitle" class="text-3xl font-bold"></h2>
+                    </div>
+                    <button onclick="closeSkillModal()" class="text-white hover:text-gray-200 text-3xl">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
             </div>
+            
+            <div class="p-8">
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-yellow-500"></i>
+                        Why This Matters
+                    </h3>
+                    <p id="skillModalWhy" class="text-gray-700"></p>
+                </div>
 
-            <!-- Instructions -->
-            <div class="bg-gray-100 p-6 border-t-2 border-gray-200">
-                <div class="flex items-center justify-center gap-8 text-sm">
-                    <div class="flex items-center gap-2 text-gray-600">
-                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white">
-                            <i class="fas fa-times"></i>
-                        </div>
-                        <span>Drag Left: Not Interested</span>
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i class="fas fa-book-open text-blue-600"></i>
+                        Recommended Resources
+                    </h3>
+                    <div id="skillModalResources" class="space-y-3">
+                        <!-- Resources will be populated -->
                     </div>
-                    <div class="flex items-center gap-2 text-gray-600">
-                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <span>Drag Right: Interested</span>
-                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="addToLearningPlan()" class="bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">
+                        <i class="fas fa-plus-circle"></i> Add to My Plan
+                    </button>
+                    <button onclick="findMentor()" class="bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition">
+                        <i class="fas fa-user-tie"></i> Find Mentor
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- High Compatibility Popup -->
-    <div id="highCompatPopup" class="hidden fixed inset-0 bg-black bg-opacity-75 z-[60] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center">
-            <div class="text-6xl mb-4">🎯</div>
-            <h3 class="text-3xl font-bold text-gray-800 mb-2">Highly Compatible! 😏</h3>
-            <p class="text-xl text-gray-600 mb-4">You're <span id="compatScore" class="font-bold text-purple-600">92%</span> ready for this opportunity!</p>
-            
-            <div class="bg-purple-50 rounded-xl p-4 mb-6 text-left">
-                <p class="font-bold text-red-600 mb-2 flex items-center gap-2 text-lg">
-                    ‼️ Missing Skills:
-                </p>
-                <ul id="missingSkills" class="space-y-1 text-sm text-gray-600">
-                    <!-- Will be populated by JavaScript -->
-                </ul>
-                <p class="text-sm text-purple-600 font-semibold mt-3">
-                    Estimated Learning Time: <span id="learningTime">4 weeks</span>
-                </p>
+    <!-- Forum Modal -->
+    <div id="forumModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 rounded-t-3xl">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-3xl font-bold">Start a Discussion</h2>
+                    <button onclick="closeForumModal()" class="text-white hover:text-gray-200 text-3xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="text-indigo-100 mt-2">Share your thoughts anonymously with the PSA community</p>
             </div>
-
-            <button onclick="generatePathFromMatch()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-lg font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg mb-3">
-                <i class="fas fa-rocket"></i> Generate Learning Path
-            </button>
-            <button onclick="closeHighCompatPopup()" class="w-full bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
-                Continue Browsing
-            </button>
+            
+            <div class="p-8">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Discussion Topic</label>
+                    <input type="text" id="forumTitle" placeholder="e.g., Tips for transitioning to Cloud Architecture?" 
+                           class="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 transition">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Your Question or Thoughts</label>
+                    <textarea id="forumContent" rows="6" placeholder="Share your experience, ask for advice, or start a discussion..." 
+                              class="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 transition"></textarea>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                    <select id="forumCategory" class="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-indigo-600">
+                        <option>Career Development</option>
+                        <option>Skill Building</option>
+                        <option>Internal Opportunities</option>
+                        <option>Work-Life Balance</option>
+                        <option>Leadership & Management</option>
+                    </select>
+                </div>
+                
+                <div class="bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 mb-6">
+                    <div class="flex items-center gap-2 text-indigo-700">
+                        <i class="fas fa-user-secret text-2xl"></i>
+                        <p class="text-sm"><strong>Anonymous Posting:</strong> Your identity will not be revealed. Posted as "PSA Employee"</p>
+                    </div>
+                </div>
+                
+                <button onclick="submitForumPost()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-xl text-lg font-bold hover:from-indigo-700 hover:to-purple-700 transition shadow-lg">
+                    <i class="fas fa-paper-plane"></i> Post Discussion
+                </button>
+            </div>
         </div>
     </div>
 
@@ -797,42 +950,164 @@
         const API_URL = 'http://localhost:5001/api';
         let currentEmployee = null;
         let currentLearningPath = null;
-        let currentCardIndex = 0;
-        let opportunities = [];
+        let selectedOpportunity = null;
+        let selectedSkill = null;
 
-        // Dark Mode Toggle Function
+        // Mock opportunities data
+        const opportunitiesData = {
+            "Tuas Port Automation team": {
+                compatibility: 92,
+                description: "Lead the development of automated terminal systems for Tuas Port Phase 2. Work with cutting-edge IoT, robotics, and cloud technologies to optimize container handling operations.",
+                skills: [
+                    { name: "Cloud Architecture", has: true },
+                    { name: "IoT Systems", has: true },
+                    { name: "Edge Computing", has: false },
+                    { name: "Robotics Integration", has: false }
+                ],
+                estimatedTime: "6-8 weeks"
+            },
+            "PORTNET modernization": {
+                compatibility: 78,
+                description: "Modernize PSA's port community system with microservices architecture, API-first design, and cloud-native technologies to improve scalability and performance.",
+                skills: [
+                    { name: "API Design", has: true },
+                    { name: "Microservices", has: false },
+                    { name: "DevOps", has: false },
+                    { name: "Cloud Migration", has: true }
+                ],
+                estimatedTime: "4-6 weeks"
+            },
+            "Digital transformation initiative": {
+                compatibility: 85,
+                description: "Drive digital innovation across PSA operations by implementing AI/ML solutions, data analytics platforms, and automation tools to enhance operational efficiency.",
+                skills: [
+                    { name: "Machine Learning", has: false },
+                    { name: "Data Analytics", has: true },
+                    { name: "Python", has: true },
+                    { name: "Process Automation", has: false }
+                ],
+                estimatedTime: "8-10 weeks"
+            }
+        };
+
+        // Dark Mode
         function toggleDarkMode() {
-            const body = document.body;
+            document.body.classList.toggle('dark');
             const icon = document.getElementById('darkModeIcon');
-
-            body.classList.toggle('dark');
-
-            if (body.classList.contains('dark')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
+            if (document.body.classList.contains('dark')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
                 localStorage.setItem('darkMode', 'enabled');
             } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
+                icon.classList.replace('fa-sun', 'fa-moon');
                 localStorage.setItem('darkMode', 'disabled');
             }
         }
 
-        // Check for saved dark mode preference on page load
         function initDarkMode() {
-            const darkMode = localStorage.getItem('darkMode');
-            const icon = document.getElementById('darkModeIcon');
-
-            if (darkMode === 'enabled') {
+            if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
+                document.getElementById('darkModeIcon').classList.replace('fa-moon', 'fa-sun');
+            }
+        }
+        initDarkMode();
+
+        // Resume Upload Functions
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Validate file
+            const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload a PDF or DOC file');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB');
+                return;
+            }
+
+            uploadResume(file);
+        }
+
+        async function uploadResume(file) {
+            document.getElementById('uploadZone').classList.add('hidden');
+            document.getElementById('uploadProgress').classList.remove('hidden');
+            document.getElementById('fileName').textContent = file.name;
+
+            const formData = new FormData();
+            formData.append('resume', file);
+            formData.append('employee_id', currentEmployee.employee_id);
+
+            // Simulate progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                document.getElementById('progressBar').style.width = progress + '%';
+                if (progress >= 90) clearInterval(progressInterval);
+            }, 200);
+
+            try {
+                const response = await fetch(`${API_URL}/upload-resume`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                clearInterval(progressInterval);
+                document.getElementById('progressBar').style.width = '100%';
+
+                if (!response.ok) throw new Error('Upload failed');
+
+                const result = await response.json();
+                displayUploadResults(result);
+            } catch (error) {
+                alert('Error uploading resume: ' + error.message);
+                resetUploadZone();
             }
         }
 
-        // Initialize dark mode on page load
-        initDarkMode();
+        function displayUploadResults(result) {
+            document.getElementById('uploadProgress').classList.add('hidden');
+            document.getElementById('uploadResults').classList.remove('hidden');
 
+            document.getElementById('newSkillsCount').textContent = result.new_skills.length;
+            document.getElementById('skillsList').innerHTML = result.new_skills.map(skill =>
+                `<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">${skill}</span>`
+            ).join('');
+        }
+
+        function resetUploadZone() {
+            document.getElementById('uploadZone').classList.remove('hidden');
+            document.getElementById('uploadProgress').classList.add('hidden');
+            document.getElementById('uploadResults').classList.add('hidden');
+            document.getElementById('resumeFile').value = '';
+        }
+
+        function refreshProfile() {
+            location.reload();
+        }
+
+        // Drag and drop
+        const uploadZone = document.getElementById('uploadZone');
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                document.getElementById('resumeFile').files = e.dataTransfer.files;
+                handleFileSelect({ target: { files: [file] } });
+            }
+        });
+
+        // Load Employees
         async function loadEmployees() {
             try {
                 const response = await fetch(`${API_URL}/employees`);
@@ -845,7 +1120,6 @@
                 });
             } catch (error) {
                 console.error(error);
-                document.getElementById('employeeSelect').innerHTML = '<option>Error loading. Is backend running?</option>';
             }
         }
 
@@ -862,34 +1136,30 @@
             try {
                 const response = await fetch(`${API_URL}/employee/${empId}`);
                 currentEmployee = await response.json();
-                
                 displayProfile(currentEmployee, empId);
-                document.getElementById('profileCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                resetUploadZone();
+                document.getElementById('profileCard').scrollIntoView({ behavior: 'smooth' });
             } catch (error) {
                 alert('Error loading employee');
             }
         });
 
         function displayProfile(emp, empId) {
-            // Show cards
             document.getElementById('profileCard').classList.remove('hidden');
             document.getElementById('statsCard').classList.remove('hidden');
             document.getElementById('skillsCoverageCard').classList.remove('hidden');
             document.getElementById('resultsCard').classList.add('hidden');
             
-            // Stats
             const yearsAtPSA = 2025 - parseInt(emp.employment_info.hire_date.split('-')[0]);
             document.getElementById('yearsAtPSA').textContent = yearsAtPSA;
             document.getElementById('skillCount').textContent = emp.skills.length;
             document.getElementById('deptName').textContent = emp.employment_info.department.split(':')[0];
             document.getElementById('projectCount').textContent = emp.projects?.length || 0;
             
-            // Calculate Leadership Potential Score (based on competencies + experience)
             const advancedComps = emp.competencies.filter(c => c.level === 'Advanced').length;
             const leadershipPotential = Math.min(95, 60 + (advancedComps * 10) + (yearsAtPSA * 2));
             document.getElementById('leadershipScore').textContent = leadershipPotential + '%';
             
-            // Profile
             const initials = emp.personal_info.name.split(' ').map(n => n[0]).join('');
             document.getElementById('profileContent').innerHTML = `
                 <div class="flex items-center gap-6">
@@ -908,7 +1178,6 @@
                 </div>
             `;
 
-            // Fetch skills matching
             fetch(`${API_URL}/match-skills/${empId}`)
                 .then(r => r.json())
                 .then(data => {
@@ -924,7 +1193,7 @@
                             </span>`
                         ).join('');
                 })
-                .catch(err => console.error('Skills matching error:', err));
+                .catch(err => console.error(err));
         }
 
         async function analyzeCareer() {
@@ -944,16 +1213,12 @@
                     })
                 });
 
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Analysis failed');
-                }
+                if (!response.ok) throw new Error('Analysis failed');
 
                 const result = await response.json();
                 displayResults(result);
             } catch (error) {
-                alert('Error: ' + error.message + '\n\nPlease check:\n1. Backend is running\n2. API key is configured\n3. Try again in a moment');
-                console.error(error);
+                alert('Error: ' + error.message);
             } finally {
                 document.getElementById('loading').classList.add('hidden');
             }
@@ -963,18 +1228,14 @@
             document.getElementById('resultsCard').classList.remove('hidden');
             currentLearningPath = data.learning_path;
 
-            // Animated score
+            // Readiness Score
             const score = data.readiness_score;
-            const scoreEl = document.getElementById('readinessScore');
-            const circleEl = document.getElementById('progressCircle');
-
-            scoreEl.textContent = score + '%';
+            document.getElementById('readinessScore').textContent = score + '%';
             const offset = 283 - (283 * score / 100);
-            circleEl.style.strokeDashoffset = offset;
-
+            document.getElementById('progressCircle').style.strokeDashoffset = offset;
             document.getElementById('readinessSummary').textContent = data.summary;
 
-            // Skill Gaps
+            // Interactive Skill Gaps
             document.getElementById('skillGaps').innerHTML = data.skill_gaps.map(gap => {
                 const colors = {
                     'High': 'from-red-500 to-pink-500',
@@ -982,54 +1243,61 @@
                     'Low': 'from-green-500 to-emerald-500'
                 };
                 return `
-                    <div class="bg-gradient-to-br ${colors[gap.priority]} text-white rounded-xl p-6 card-hover">
+                    <div onclick="openSkillDetail('${gap.skill.replace(/'/g, "\\'")}', '${gap.priority}', '${gap.why.replace(/'/g, "\\'")}')" 
+                         class="bg-gradient-to-br ${colors[gap.priority]} text-white rounded-xl p-6 interactive-card">
                         <div class="flex items-center justify-between mb-3">
                             <i class="fas fa-bolt text-3xl"></i>
                             <span class="text-sm font-bold opacity-90">${gap.priority}</span>
                         </div>
                         <h4 class="text-xl font-bold mb-2">${gap.skill}</h4>
-                        <p class="text-sm opacity-90">${gap.why}</p>
+                        <p class="text-sm opacity-90 mb-3">${gap.why.substring(0, 80)}...</p>
+                        <div class="flex items-center gap-2 text-sm font-semibold opacity-90">
+                            <i class="fas fa-hand-pointer"></i>
+                            <span>Click to explore resources</span>
+                        </div>
                     </div>
                 `;
             }).join('');
 
-            // Learning Path - Make clickable
+            // Learning Path
             document.getElementById('learningPath').innerHTML = data.learning_path.map((step, i) => `
-                <div class="flex gap-4 cursor-pointer card-hover" onclick="showLearningDetail(${i})">
+                <div class="flex gap-4">
                     <div class="flex flex-col items-center">
                         <div class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center font-bold text-lg">
                             ${step.step}
                         </div>
                         ${i < data.learning_path.length - 1 ? '<div class="w-1 flex-grow bg-gray-300 my-2"></div>' : ''}
                     </div>
-                    <div class="flex-grow bg-gray-50 rounded-xl p-6 mb-4 hover:bg-blue-50 transition">
+                    <div class="flex-grow bg-gray-50 rounded-xl p-6 mb-4">
                         <div class="flex justify-between items-start mb-2">
                             <h4 class="text-xl font-bold text-gray-800">${step.skill}</h4>
                             <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">${step.timeline}</span>
                         </div>
                         <p class="text-gray-700 mb-3">${step.action}</p>
-                        <div class="flex flex-wrap gap-2 mb-3">
+                        <div class="flex flex-wrap gap-2">
                             ${step.resources.map(r => `<span class="bg-white border border-gray-300 px-3 py-1 rounded-lg text-sm"><i class="fas fa-book text-gray-800"></i> ${r}</span>`).join('')}
-                        </div>
-                        <div class="flex items-center gap-2 text-blue-600 font-semibold text-sm">
-                            <i class="fas fa-arrow-right"></i>
-                            <span>Click to see detailed weekly breakdown</span>
                         </div>
                     </div>
                 </div>
             `).join('');
             
-            // Opportunities
-            document.getElementById('opportunities').innerHTML = data.internal_opportunities.map(opp => 
-                `<div class="bg-white border-l-4 border-purple-500 p-4 rounded-lg shadow">
-                    <i class="fas fa-arrow-right text-purple-600"></i> ${opp}
-                </div>`
-            ).join('');
+            // Clickable Opportunities
+            document.getElementById('opportunities').innerHTML = data.internal_opportunities.map((opp, i) => `
+                <div onclick="openOpportunityDetail('${opp.replace(/'/g, "\\'")}', ${i})" 
+                     class="bg-white border-l-4 border-purple-500 p-4 rounded-lg shadow interactive-card hover:border-l-8">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-grow">
+                            <i class="fas fa-arrow-right text-purple-600"></i> ${opp}
+                        </div>
+                        <i class="fas fa-chevron-right text-purple-400"></i>
+                    </div>
+                </div>
+            `).join('');
             
-            // Next 30 Days
-            document.getElementById('next30Days').innerHTML = data.next_30_days.map((item, i) => 
+            // 30-Day Actions
+            document.getElementById('next30Days').innerHTML = data.next_30_days.map(item => 
                 `<li class="flex items-start gap-3 bg-white p-4 rounded-lg shadow">
-                    <i class="fas fa-check-circle text-green-600 text-xl mt-1"></i>
+                    <i class="fas fa-check-circle text-orange-600 text-xl mt-1"></i>
                     <span class="text-gray-700">${item}</span>
                 </li>`
             ).join('');
@@ -1042,527 +1310,166 @@
             }, 100);
         }
 
-        async function showLearningDetail(stepIndex) {
-            const step = currentLearningPath[stepIndex];
-
-            // Populate detail view with basic info
-            document.getElementById('detailStepNumber').textContent = step.step;
-            document.getElementById('detailSkillName').textContent = step.skill;
-            document.getElementById('detailTimeline').textContent = step.timeline;
-            document.getElementById('detailAction').textContent = step.action;
-
-            // Resources
-            document.getElementById('detailResources').innerHTML = step.resources.map((resource, i) => `
-                <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-4">
-                    <div class="flex items-center gap-3 mb-2">
-                        <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">
-                            ${i + 1}
-                        </div>
-                        <h4 class="font-bold text-gray-800">${resource}</h4>
-                    </div>
-                    <p class="text-sm text-gray-600 ml-13">Access this resource to build your skills in ${step.skill}</p>
-                </div>
-            `).join('');
-
-            // Call backend to get detailed weekly breakdown
-            try {
-                const response = await fetch(`${API_URL}/learning-detail`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        skill: step.skill,
-                        timeline: step.timeline,
-                        action: step.action,
-                        resources: step.resources
-                    })
-                });
-
-                if (response.ok) {
-                    const detailData = await response.json();
-                    displayWeeklyBreakdown(detailData.weekly_plan);
-                    displaySuccessMetrics(detailData.success_metrics);
-                    displayGettingStarted(detailData.getting_started);
-                } else {
-                    // Fallback to generated content if backend doesn't have the endpoint yet
-                    generateFallbackDetails(step);
-                }
-            } catch (error) {
-                console.error('Error fetching detail:', error);
-                generateFallbackDetails(step);
-            }
-
-            // Hide roadmap, show detail view
-            document.getElementById('resultsCard').classList.add('hidden');
-            document.getElementById('detailedLearningView').classList.remove('hidden');
-            document.getElementById('detailedLearningView').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function generateFallbackDetails(step) {
-            // Parse timeline to get weeks
-            const timelineMatch = step.timeline.match(/(\d+)\s*(month|week)/i);
-            let weeks = 4;
-            if (timelineMatch) {
-                const num = parseInt(timelineMatch[1]);
-                const unit = timelineMatch[2].toLowerCase();
-                weeks = unit === 'month' ? num * 4 : num;
-            }
-
-            // Generate weekly breakdown
-            const weeklyPlan = [];
-            for (let i = 1; i <= weeks; i++) {
-                weeklyPlan.push({
-                    week: i,
-                    focus: `Week ${i} - ${step.skill} foundations and practical application`,
-                    activities: [
-                        `Study core concepts and principles`,
-                        `Complete hands-on exercises`,
-                        `Review and reflect on learning`
-                    ],
-                    deliverable: `Week ${i} checkpoint completed`
-                });
-            }
-
-            displayWeeklyBreakdown(weeklyPlan);
-
-            // Generate success metrics
-            const successMetrics = [
-                'Complete all assigned learning resources',
-                'Achieve 80% or higher on knowledge assessments',
-                'Apply learned skills to a PSA project',
-                'Receive positive feedback from mentor or manager'
-            ];
-            displaySuccessMetrics(successMetrics);
-
-            // Generate getting started
-            const gettingStarted = [
-                'Enroll in the recommended courses within the first week',
-                'Set up a dedicated study schedule (2-3 hours per week)',
-                'Connect with a mentor or peer who has this skill',
-                'Identify a PSA project where you can apply this learning'
-            ];
-            displayGettingStarted(gettingStarted);
-        }
-
-        function displayWeeklyBreakdown(weeklyPlan) {
-            document.getElementById('weeklyBreakdown').innerHTML = weeklyPlan.map(week => `
-                <div class="border-l-4 border-purple-500 bg-purple-50 rounded-lg p-6 week-card">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
-                            ${week.week}
-                        </div>
-                        <h4 class="text-xl font-bold text-black">${week.focus}</h4>
-                    </div>
-                    <div class="ml-15">
-                        <p class="text-sm font-semibold text-black mb-2">Key Activities:</p>
-                        <ul class="space-y-1 mb-3">
-                            ${week.activities.map(activity => `
-                                <li class="text-black flex items-start gap-2">
-                                    <i class="fas fa-check-circle text-purple-600 mt-1"></i>
-                                    <span>${activity}</span>
-                                </li>
-                            `).join('')}
-                        </ul>
-                        <div class="bg-white border border-purple-200 rounded-lg p-3 mt-3">
-                            <p class="text-sm font-semibold text-purple-700">
-                                <i class="fas fa-flag-checkered"></i> Deliverable: ${week.deliverable}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function displaySuccessMetrics(metrics) {
-            document.getElementById('successMetrics').innerHTML = metrics.map((metric, i) => `
-                <div class="flex items-start gap-3 bg-white border-l-4 border-green-500 p-4 rounded-lg shadow">
-                    <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
-                        ${i + 1}
-                    </div>
-                    <p class="text-gray-700">${metric}</p>
-                </div>
-            `).join('');
-        }
-
-        function displayGettingStarted(steps) {
-            document.getElementById('gettingStarted').innerHTML = steps.map((step, i) => `
-                <div class="flex items-start gap-3 bg-white border-l-4 border-orange-500 p-4 rounded-lg shadow">
-                    <i class="fas fa-star text-orange-600 text-xl mt-1"></i>
-                    <p class="text-gray-700">${step}</p>
-                </div>
-            `).join('');
-        }
-
-        function backToRoadmap() {
-            document.getElementById('detailedLearningView').classList.add('hidden');
-            document.getElementById('resultsCard').classList.remove('hidden');
-            document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // SkillsMatch Data
-        opportunities = [
-            {
-                id: 1,
-                title: "Tuas Port Automation - NextGen Terminal",
-                compatibility: 92,
-                duration: "6 months",
-                team: "12 people",
-                impact: "High",
+        // Opportunity Modal Functions
+        function openOpportunityDetail(oppTitle, index) {
+            const oppData = opportunitiesData[oppTitle] || {
+                compatibility: 75,
+                description: "Exciting opportunity to contribute to PSA's strategic initiatives.",
                 skills: [
-                    { name: "Cloud Architecture", has: true },
-                    { name: "IoT Systems", has: true },
-                    { name: "Edge Computing", has: false }
+                    { name: "Project Management", has: true },
+                    { name: "Team Leadership", has: false },
+                    { name: "Strategic Planning", has: false }
                 ],
-                description: "Lead the development of automated terminal systems for Tuas Port Phase 2. Work with cutting-edge IoT and cloud technologies."
-            },
-            {
-                id: 2,
-                title: "PORTNET 2.0 Modernization Initiative",
-                compatibility: 68,
-                duration: "4 months",
-                team: "8 people",
-                impact: "Medium",
-                skills: [
-                    { name: "API Design", has: true },
-                    { name: "Microservices", has: false },
-                    { name: "DevOps", has: false }
-                ],
-                description: "Modernize PSA's port community system with microservices architecture and API-first design."
-            },
-            {
-                id: 3,
-                title: "Cybersecurity Infrastructure Uplift",
-                compatibility: 45,
-                duration: "3 months",
-                team: "6 people",
-                impact: "High",
-                skills: [
-                    { name: "Network Security", has: false },
-                    { name: "Threat Analysis", has: false },
-                    { name: "Risk Management", has: false }
-                ],
-                description: "Strengthen PSA's cybersecurity posture across all global terminals with zero-trust architecture."
-            }
-        ];
+                estimatedTime: "6-8 weeks"
+            };
 
-        // Open SkillsMatch Modal
-        function openSkillsMatch() {
-            if (!currentEmployee) {
-                alert('Please select an employee first');
-                return;
-            }
+            selectedOpportunity = { title: oppTitle, ...oppData };
+
+            document.getElementById('oppModalTitle').textContent = oppTitle;
+            document.getElementById('oppModalCompat').textContent = oppData.compatibility + '%';
+            document.getElementById('oppModalDescription').textContent = oppData.description;
             
-            currentCardIndex = 0;
-            document.getElementById('skillsMatchModal').classList.remove('hidden');
-            renderCard();
+            // Animated compatibility circle
+            const circumference = 2 * Math.PI * 56;
+            const offset = circumference - (oppData.compatibility / 100) * circumference;
+            document.getElementById('oppCompatCircle').style.strokeDashoffset = offset;
+
+            const hasSkills = oppData.skills.filter(s => s.has).length;
+            const totalSkills = oppData.skills.length;
+            document.getElementById('oppModalReadiness').textContent = 
+                `You have ${hasSkills} out of ${totalSkills} required skills. You're ${Math.round(hasSkills/totalSkills*100)}% ready!`;
+
+            // Skills grid
+            document.getElementById('oppModalSkills').innerHTML = oppData.skills.map(skill => `
+                <div class="flex items-center gap-2 p-3 rounded-lg ${skill.has ? 'bg-green-50 border-2 border-green-200' : 'bg-gray-50 border-2 border-gray-200'}">
+                    <i class="fas ${skill.has ? 'fa-check-circle text-green-600' : 'fa-circle text-gray-400'}"></i>
+                    <span class="font-semibold ${skill.has ? 'text-green-700' : 'text-gray-700'}">${skill.name}</span>
+                </div>
+            `).join('');
+
+            // Skill gaps
+            const gaps = oppData.skills.filter(s => !s.has);
+            document.getElementById('oppModalGaps').innerHTML = gaps.map(skill => `
+                <div class="flex items-start gap-3 bg-white p-3 rounded-lg border-l-4 border-orange-500">
+                    <i class="fas fa-graduation-cap text-orange-600 text-xl mt-1"></i>
+                    <span class="text-gray-700">${skill.name}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('oppModalTime').textContent = oppData.estimatedTime;
+            document.getElementById('opportunityModal').classList.remove('hidden');
         }
 
-        // Close SkillsMatch Modal
-        function closeSkillsMatch() {
-            document.getElementById('skillsMatchModal').classList.add('hidden');
-            document.getElementById('noMoreCards').classList.add('hidden');
+        function closeOpportunityModal() {
+            document.getElementById('opportunityModal').classList.add('hidden');
         }
 
-        // Render Current Card
-        function renderCard() {
-            const cardStack = document.getElementById('cardStack');
+        function generateOpportunityPath() {
+            closeOpportunityModal();
+            document.getElementById('targetRole').value = selectedOpportunity.title;
+            analyzeCareer();
+        }
+
+        // Skill Modal Functions
+        function openSkillDetail(skill, priority, why) {
+            selectedSkill = { skill, priority, why };
             
-            if (currentCardIndex >= opportunities.length) {
-                cardStack.innerHTML = '';
-                document.getElementById('noMoreCards').classList.remove('hidden');
+            document.getElementById('skillModalTitle').textContent = skill;
+            document.getElementById('skillModalPriority').textContent = priority + ' PRIORITY';
+            document.getElementById('skillModalWhy').textContent = why;
+
+            // Mock resources
+            const resources = [
+                { name: "Coursera - " + skill + " Fundamentals", type: "Course", duration: "4 weeks" },
+                { name: "LinkedIn Learning - Advanced " + skill, type: "Video Series", duration: "6 hours" },
+                { name: "PSA Internal Training - " + skill + " Workshop", type: "Workshop", duration: "2 days" }
+            ];
+
+            document.getElementById('skillModalResources').innerHTML = resources.map(res => `
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h5 class="font-bold text-gray-800">${res.name}</h5>
+                        <span class="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">${res.type}</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Duration: ${res.duration}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('skillModal').classList.remove('hidden');
+        }
+
+        function closeSkillModal() {
+            document.getElementById('skillModal').classList.add('hidden');
+        }
+
+        function addToLearningPlan() {
+            alert(`✓ ${selectedSkill.skill} added to your learning plan!`);
+            closeSkillModal();
+        }
+
+        function findMentor() {
+            alert(`🎯 Finding mentors with expertise in ${selectedSkill.skill}...`);
+            closeSkillModal();
+        }
+
+        // Forum Functions
+        function openForumModal() {
+            document.getElementById('forumModal').classList.remove('hidden');
+        }
+
+        function closeForumModal() {
+            document.getElementById('forumModal').classList.add('hidden');
+            document.getElementById('forumTitle').value = '';
+            document.getElementById('forumContent').value = '';
+        }
+
+        function submitForumPost() {
+            const title = document.getElementById('forumTitle').value;
+            const content = document.getElementById('forumContent').value;
+            const category = document.getElementById('forumCategory').value;
+
+            if (!title || !content) {
+                alert('Please fill in all fields');
                 return;
             }
 
-            const opp = opportunities[currentCardIndex];
-            
-            const compatColor = opp.compatibility >= 90 ? 'text-green-600' : opp.compatibility >= 70 ? 'text-yellow-600' : 'text-orange-600';
-            
-            cardStack.innerHTML = `
-                <div id="currentCard" class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 cursor-grab active:cursor-grabbing transition-transform">
-                    <!-- Compatibility Badge -->
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-4xl font-bold ${compatColor}">${opp.compatibility}%</span>
-                        <div class="text-right">
-                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold">
-                                ${opp.duration}
-                            </span>
+            // Create new post
+            const newPost = `
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border-l-4 border-indigo-500">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-800">PSA Employee</p>
+                                <p class="text-xs text-gray-500">Just now • ${category}</p>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Title -->
-                    <h3 class="text-2xl font-bold text-gray-800 mb-3">${opp.title}</h3>
-                    
-                    <!-- Description -->
-                    <p class="text-gray-600 mb-4">${opp.description}</p>
-
-                    <!-- Skills -->
-                    <div class="mb-4">
-                        <p class="font-semibold text-gray-800 mb-2">Skills Required:</p>
-                        <div class="flex flex-wrap gap-2">
-                            ${opp.skills.map(skill => `
-                                <span class="px-3 py-1 rounded-full text-sm font-semibold ${skill.has ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">
-                                    ${skill.has ? '✓' : '⚠'} ${skill.name}
-                                </span>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <!-- Details -->
+                    <h4 class="font-bold text-lg text-gray-800 mb-2">${title}</h4>
+                    <p class="text-gray-700 mb-3">${content}</p>
                     <div class="flex items-center gap-4 text-sm text-gray-600">
-                        <span><i class="fas fa-users"></i> ${opp.team}</span>
-                        <span><i class="fas fa-chart-line"></i> ${opp.impact} Impact</span>
-                    </div>
-
-                    <!-- Swipe Instruction -->
-                    <div class="mt-6 pt-4 border-t-2 border-gray-200 text-center text-sm text-gray-500">
-                        👈 Drag left to pass • Drag right if interested 👉
+                        <button class="flex items-center gap-1 hover:text-indigo-600">
+                            <i class="fas fa-thumbs-up"></i> 0
+                        </button>
+                        <button class="flex items-center gap-1 hover:text-indigo-600">
+                            <i class="fas fa-comment"></i> 0 replies
+                        </button>
                     </div>
                 </div>
             `;
 
-            setupCardDrag();
+            document.getElementById('forumPosts').insertAdjacentHTML('afterbegin', newPost);
+            closeForumModal();
+            
+            // Show success message
+            alert('✓ Your discussion has been posted anonymously!');
         }
 
-        // Setup Card Dragging
-        function setupCardDrag() {
-            const card = document.getElementById('currentCard');
-            let startX = 0;
-            let currentX = 0;
-            let isDragging = false;
-
-            card.addEventListener('mousedown', dragStart);
-            card.addEventListener('touchstart', dragStart);
-
-            function dragStart(e) {
-                isDragging = true;
-                startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-                card.style.transition = 'none';
-
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('touchmove', drag);
-                document.addEventListener('mouseup', dragEnd);
-                document.addEventListener('touchend', dragEnd);
-            }
-
-            function drag(e) {
-                if (!isDragging) return;
-                
-                currentX = (e.type === 'mousemove' ? e.clientX : e.touches[0].clientX) - startX;
-                const rotation = currentX / 20;
-                
-                card.style.transform = `translateX(${currentX}px) rotate(${rotation}deg)`;
-                
-                // Visual feedback
-                if (currentX > 50) {
-                    card.style.borderColor = '#10b981'; // Green
-                } else if (currentX < -50) {
-                    card.style.borderColor = '#ef4444'; // Red
-                } else {
-                    card.style.borderColor = 'transparent';
-                }
-            }
-
-            function dragEnd() {
-                isDragging = false;
-                document.removeEventListener('mousemove', drag);
-                document.removeEventListener('touchmove', drag);
-                document.removeEventListener('mouseup', dragEnd);
-                document.removeEventListener('touchend', dragEnd);
-
-                if (Math.abs(currentX) > 100) {
-                    // Swiped far enough
-                    const direction = currentX > 0 ? 'right' : 'left';
-                    card.style.transition = 'transform 0.3s ease';
-                    card.style.transform = `translateX(${currentX > 0 ? 1000 : -1000}px) rotate(${currentX > 0 ? 45 : -45}deg)`;
-                    
-                    setTimeout(() => {
-                        handleSwipe(direction);
-                    }, 300);
-                } else {
-                    // Return to center
-                    card.style.transition = 'transform 0.3s ease';
-                    card.style.transform = 'translateX(0) rotate(0)';
-                    card.style.borderColor = 'transparent';
-                }
-            }
+        function loadMorePosts() {
+            alert('Loading more discussions...');
         }
-
-        // Handle Swipe
-        function handleSwipe(direction) {
-            const opp = opportunities[currentCardIndex];
-            
-            if (direction === 'right' && opp.compatibility >= 90) {
-                // Show high compatibility popup
-                showHighCompatPopup(opp);
-            } else {
-                // Move to next card
-                currentCardIndex++;
-                renderCard();
-            }
-        }
-
-        // Show High Compatibility Popup
-        function showHighCompatPopup(opp) {
-            document.getElementById('compatScore').textContent = opp.compatibility + '%';
-            
-            const missingSkills = opp.skills.filter(s => !s.has);
-            document.getElementById('missingSkills').innerHTML = missingSkills.map(skill => 
-                `<li class="flex items-center gap-2"><i class="fas fa-arrow-right text-purple-600"></i> ${skill.name}</li>`
-            ).join('');
-            
-            document.getElementById('learningTime').textContent = '4 weeks';
-            document.getElementById('highCompatPopup').classList.remove('hidden');
-        }
-
-        // Close High Compat Popup
-        function closeHighCompatPopup() {
-            document.getElementById('highCompatPopup').classList.add('hidden');
-            currentCardIndex++;
-            renderCard();
-        }
-
-        // Generate Learning Path from Match
-        async function generatePathFromMatch() {
-            const opp = opportunities[currentCardIndex];
-            const missingSkills = opp.skills.filter(s => !s.has).map(s => s.name);
-            
-            // Close popups
-            document.getElementById('highCompatPopup').classList.add('hidden');
-            document.getElementById('skillsMatchModal').classList.add('hidden');
-            
-            // Show loading
-            document.getElementById('loading').classList.remove('hidden');
-            document.getElementById('loading').scrollIntoView({ behavior: 'smooth' });
-            
-            try {
-                const response = await fetch(`${API_URL}/analyze-opportunity`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        employee_id: currentEmployee.employee_id,
-                        opportunity_title: opp.title,
-                        missing_skills: missingSkills
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Analysis failed');
-                }
-
-                const result = await response.json();
-                displayOpportunityResults(result, opp);
-            } catch (error) {
-                alert('Error: ' + error.message);
-                console.error(error);
-            } finally {
-                document.getElementById('loading').classList.add('hidden');
-            }
-        }
-
-        // Display Opportunity-Focused Results
-        function displayOpportunityResults(data, opp) {
-            // Hide regular results, show opportunity results
-            document.getElementById('resultsCard').classList.add('hidden');
-            document.getElementById('opportunityResultsCard').classList.remove('hidden');
-            
-            // Set opportunity title
-            document.getElementById('oppTitle').textContent = data.opportunity_title;
-            document.getElementById('oppCompatibility').textContent = opp.compatibility + '%';
-            document.getElementById('oppReadiness').textContent = data.readiness_assessment;
-            document.getElementById('oppTimeToReady').textContent = data.time_to_ready;
-            
-            // Display learning steps
-            document.getElementById('oppLearningSteps').innerHTML = data.learning_steps.map((step, i) => `
-                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-600">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="text-2xl font-bold text-gray-800">${step.skill}</h4>
-                        <span class="bg-purple-100 text-purple-700 px-4 py-2 rounded-full font-semibold">${step.timeline}</span>
-                    </div>
-                    
-                    <!-- Week by Week -->
-                    <div class="space-y-3 mb-4">
-                        <p class="font-semibold text-gray-700">📅 Week-by-Week Plan:</p>
-                        ${step.week_by_week.map(week => `
-                            <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg p-5 border-l-4 border-purple-600 shadow-md hover:shadow-lg transition">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">
-                                        ${week.week}
-                                    </div>
-                                    <h5 class="font-bold text-gray-900 text-lg">${week.focus}</h5>
-                                </div>
-                                <ul class="space-y-2 ml-13 mb-3">
-                                    ${week.activities.map(activity => `
-                                        <li class="flex items-start gap-2 text-gray-900">
-                                            <i class="fas fa-check-circle text-purple-600 mt-1 flex-shrink-0"></i>
-                                            <span class="font-medium">${activity}</span>
-                                        </li>
-                                    `).join('')}
-                                </ul>
-                                <div class="ml-13 bg-purple-50 rounded-lg p-3 border-2 border-purple-300">
-                                    <p class="text-sm font-semibold text-purple-700 flex items-center gap-2">
-                                        <i class="fas fa-flag-checkered"></i> 
-                                        ${week.deliverable}
-                                    </p>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <!-- Resources -->
-                    <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
-                        <p class="font-semibold text-black mb-2">📚 Learning Resources:</p>
-                        <div class="flex flex-wrap gap-2">
-                            ${step.resources.map(resource => `
-                                <span class="bg-white border-2 border-green-300 px-3 py-2 rounded-lg text-sm font-semibold text-white">
-                                    <i class="fas fa-book text-green-600"></i> ${resource}
-                                </span>
-                            `).join('')}
-                        </div>
-                    </div>
-            `).join('');
-            
-            // Quick Wins
-            document.getElementById('oppQuickWins').innerHTML = data.quick_wins.map((win, i) => `
-                <li class="flex items-start gap-3 bg-white p-4 rounded-lg shadow">
-                    <div class="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
-                        ${i + 1}
-                    </div>
-                    <span class="text-gray-700">${win}</span>
-                </li>
-            `).join('');
-            
-            // Success Metrics
-            document.getElementById('oppSuccessMetrics').innerHTML = data.success_metrics.map((metric, i) => `
-                <div class="flex items-start gap-3 bg-white border-l-4 border-green-500 p-4 rounded-lg shadow">
-                    <i class="fas fa-trophy text-green-600 text-xl mt-1"></i>
-                    <span class="text-gray-700">${metric}</span>
-                </div>
-            `).join('');
-            
-            // Next Step
-            document.getElementById('oppNextStep').textContent = data.next_step;
-            
-            // Scroll to results
-            setTimeout(() => {
-                document.getElementById('opportunityResultsCard').scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        }
-
-        // Back to Employee View
-        function backToEmployeeView() {
-            document.getElementById('opportunityResultsCard').classList.add('hidden');
-            document.getElementById('profileCard').classList.remove('hidden');
-            document.getElementById('profileCard').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Back to SkillsMatch
-        function backToSkillsMatch() {
-            document.getElementById('opportunityResultsCard').classList.add('hidden');
-            currentCardIndex++;
-            openSkillsMatch();
-        }
-
-
 
         loadEmployees();
     </script>

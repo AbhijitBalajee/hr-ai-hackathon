@@ -118,6 +118,28 @@ def match_skills(emp_id):
         'coverage_percentage': round(len(current_skills) / len(skills_taxonomy) * 100, 1)
     })
 
+@app.route('/api/upload-resume', methods=['POST'])
+def upload_resume():
+    """Parse resume and extract skills using AI"""
+    if 'resume' not in request.files:
+        return jsonify({'error': 'No file uploaded'}), 400
+    
+    file = request.files['resume']
+    emp_id = request.form.get('employee_id')
+    
+    if not file or not emp_id:
+        return jsonify({'error': 'Missing file or employee ID'}), 400
+    
+    # TODO: Implement actual resume parsing with AI
+    # For now, return mock data
+    mock_skills = ['Machine Learning', 'Docker', 'Kubernetes', 'Cloud Computing', 'Python']
+    
+    return jsonify({
+        'success': True,
+        'new_skills': mock_skills,
+        'experience_updated': True
+    })
+
 @app.route('/api/learning-detail', methods=['POST'])
 def learning_detail():
     """Generate detailed weekly breakdown for a specific learning step using AI"""
