@@ -33,6 +33,127 @@
         .psa-accent-bg {
             background-color: #00a8e1;
         }
+        .page-transition {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .page-hidden {
+            opacity: 0;
+            transform: translateX(20px);
+            pointer-events: none;
+            position: absolute;
+        }
+        .page-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .week-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .week-card:hover {
+            transform: translateX(8px);
+            border-left-width: 6px;
+        }
+        /* Dark Mode Styles */
+        body.dark {
+            background-color: #0f172a !important;
+            color: #e2e8f0;
+        }
+        .dark .bg-gray-50 {
+            background-color: #1e293b !important;
+        }
+        .dark .bg-white {
+            background-color: #1e293b !important;
+        }
+        .dark .text-gray-800 {
+            color: #e2e8f0 !important;
+        }
+        .dark .text-gray-700 {
+            color: #cbd5e1 !important;
+        }
+        .dark .text-gray-600 {
+            color: #94a3b8 !important;
+        }
+        .dark .text-gray-500 {
+            color: #64748b !important;
+        }
+        .dark .text-gray-400 {
+            color: #94a3b8 !important;
+        }
+        .dark .text-gray-300 {
+            color: #cbd5e1 !important;
+        }
+        .dark .border-gray-300 {
+            border-color: #334155 !important;
+        }
+        .dark .border-gray-200 {
+            border-color: #334155 !important;
+        }
+        .dark .bg-gray-100 {
+            background-color: #334155 !important;
+        }
+        .dark .bg-gray-200 {
+            background-color: #475569 !important;
+        }
+        .dark input, .dark select {
+            background-color: #334155 !important;
+            color: #e2e8f0 !important;
+            border-color: #475569 !important;
+        }
+        .dark .from-gray-50 {
+            --tw-gradient-from: #1e293b !important;
+        }
+        .dark .to-gray-100 {
+            --tw-gradient-to: #334155 !important;
+        }
+        .dark .to-gray-200 {
+            --tw-gradient-to: #475569 !important;
+        }
+        .dark .from-gray-100 {
+            --tw-gradient-from: #334155 !important;
+        }
+        /* Dark mode for gradient backgrounds */
+        .dark .from-purple-50 {
+            --tw-gradient-from: #312e81 !important;
+        }
+        .dark .to-pink-50 {
+            --tw-gradient-to: #831843 !important;
+        }
+        .dark .from-green-50 {
+            --tw-gradient-from: #064e3b !important;
+        }
+        .dark .to-emerald-50 {
+            --tw-gradient-to: #065f46 !important;
+        }
+        .dark .from-orange-50 {
+            --tw-gradient-from: #7c2d12 !important;
+        }
+        .dark .to-amber-50 {
+            --tw-gradient-to: #78350f !important;
+        }
+        .dark .from-blue-50 {
+            --tw-gradient-from: #1e3a8a !important;
+        }
+        .dark .to-indigo-50 {
+            --tw-gradient-to: #312e81 !important;
+        }
+        /* Preserve gradient cards */
+        .dark .from-gray-800 {
+            --tw-gradient-from: #1f2937 !important;
+        }
+        .dark .to-gray-900 {
+            --tw-gradient-to: #111827 !important;
+        }
+        .dark .from-red-500, .dark .from-yellow-500, .dark .from-green-500,
+        .dark .from-purple-500, .dark .from-blue-600, .dark .to-indigo-700 {
+            /* Keep original vibrant colors for accent gradients */
+        }
+        #darkModeToggle {
+            transition: transform 0.3s ease;
+        }
+        #darkModeToggle:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -47,9 +168,14 @@
                         <p class="text-gray-300 mt-1 text-lg italic">Journey to Greater Success at PSA</p>
                     </div>
                 </div>
-                <div class="text-right">
-                    <div class="text-2xl font-bold psa-accent">PSA</div>
-                    <div class="text-sm text-gray-300">Future-Ready Workforce</div>
+                <div class="flex items-center gap-4">
+                    <button id="darkModeToggle" onclick="toggleDarkMode()" class="text-3xl text-white hover:text-blue-400 transition cursor-pointer" title="Toggle Dark Mode">
+                        <i id="darkModeIcon" class="fas fa-moon"></i>
+                    </button>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold psa-accent">PSA</div>
+                        <div class="text-sm text-gray-300">Future-Ready Workforce</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -230,6 +356,7 @@
                     <i class="fas fa-road text-3xl text-blue-600"></i>
                     <h2 class="text-3xl font-bold text-gray-800">Your Learning Roadmap</h2>
                 </div>
+                <p class="text-gray-600 mb-4"><i class="fas fa-hand-pointer text-blue-600"></i> Click on any learning step below to see the detailed weekly breakdown</p>
                 <div id="learningPath" class="space-y-4"></div>
             </div>
 
@@ -263,6 +390,75 @@
                 <p id="mentorshipMatch" class="text-lg text-gray-700"></p>
             </div>
         </div>
+
+        <!-- Detailed Learning View (Hidden by default) -->
+        <div id="detailedLearningView" class="hidden space-y-6">
+            <!-- Back Button -->
+            <button onclick="backToRoadmap()" class="flex items-center gap-2 text-gray-700 hover:text-gray-900 font-semibold mb-4 transition">
+                <i class="fas fa-arrow-left text-xl"></i>
+                <span>Back to Career Roadmap</span>
+            </button>
+
+            <!-- Learning Detail Header -->
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-4xl"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-blue-100 text-sm font-semibold mb-1">STEP <span id="detailStepNumber"></span> OF YOUR LEARNING JOURNEY</p>
+                        <h2 id="detailSkillName" class="text-4xl font-bold"></h2>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-blue-100 text-sm mb-1">Duration</p>
+                        <p id="detailTimeline" class="text-2xl font-bold"></p>
+                    </div>
+                </div>
+                <p id="detailAction" class="text-lg text-blue-50 mt-4"></p>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-green-600">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-book-open text-3xl text-green-600"></i>
+                    <h3 class="text-2xl font-bold text-gray-800">Recommended Learning Resources</h3>
+                </div>
+                <div id="detailResources" class="grid md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <!-- Weekly Breakdown -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-purple-600">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-calendar-week text-3xl text-purple-600"></i>
+                    <h3 class="text-2xl font-bold text-gray-800">Week-by-Week Learning Plan</h3>
+                </div>
+                <div id="weeklyBreakdown" class="space-y-4"></div>
+            </div>
+
+            <!-- Success Metrics -->
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-trophy text-3xl text-green-600"></i>
+                    <h3 class="text-2xl font-bold text-gray-800">Success Metrics & Milestones</h3>
+                </div>
+                <div id="successMetrics" class="space-y-3"></div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-rocket text-3xl text-orange-600"></i>
+                    <h3 class="text-2xl font-bold text-gray-800">Getting Started</h3>
+                </div>
+                <div id="gettingStarted" class="space-y-3"></div>
+            </div>
+
+            <!-- Back Button (Bottom) -->
+            <button onclick="backToRoadmap()" class="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white py-4 rounded-xl text-lg font-bold hover:from-gray-900 hover:to-black transition shadow-lg flex items-center justify-center gap-3">
+                <i class="fas fa-arrow-left text-xl"></i>
+                Back to Career Roadmap Overview
+            </button>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -280,6 +476,40 @@
     <script>
         const API_URL = 'http://localhost:5000/api';
         let currentEmployee = null;
+        let currentLearningPath = null;
+
+        // Dark Mode Toggle Function
+        function toggleDarkMode() {
+            const body = document.body;
+            const icon = document.getElementById('darkModeIcon');
+
+            body.classList.toggle('dark');
+
+            if (body.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Check for saved dark mode preference on page load
+        function initDarkMode() {
+            const darkMode = localStorage.getItem('darkMode');
+            const icon = document.getElementById('darkModeIcon');
+
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+
+        // Initialize dark mode on page load
+        initDarkMode();
 
         async function loadEmployees() {
             try {
@@ -409,18 +639,19 @@
 
         function displayResults(data) {
             document.getElementById('resultsCard').classList.remove('hidden');
-            
+            currentLearningPath = data.learning_path;
+
             // Animated score
             const score = data.readiness_score;
             const scoreEl = document.getElementById('readinessScore');
             const circleEl = document.getElementById('progressCircle');
-            
+
             scoreEl.textContent = score + '%';
             const offset = 283 - (283 * score / 100);
             circleEl.style.strokeDashoffset = offset;
-            
+
             document.getElementById('readinessSummary').textContent = data.summary;
-            
+
             // Skill Gaps
             document.getElementById('skillGaps').innerHTML = data.skill_gaps.map(gap => {
                 const colors = {
@@ -439,24 +670,28 @@
                     </div>
                 `;
             }).join('');
-            
-            // Learning Path
+
+            // Learning Path - Make clickable
             document.getElementById('learningPath').innerHTML = data.learning_path.map((step, i) => `
-                <div class="flex gap-4">
+                <div class="flex gap-4 cursor-pointer card-hover" onclick="showLearningDetail(${i})">
                     <div class="flex flex-col items-center">
                         <div class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center font-bold text-lg">
                             ${step.step}
                         </div>
                         ${i < data.learning_path.length - 1 ? '<div class="w-1 flex-grow bg-gray-300 my-2"></div>' : ''}
                     </div>
-                    <div class="flex-grow bg-gray-50 rounded-xl p-6 mb-4">
+                    <div class="flex-grow bg-gray-50 rounded-xl p-6 mb-4 hover:bg-blue-50 transition">
                         <div class="flex justify-between items-start mb-2">
                             <h4 class="text-xl font-bold text-gray-800">${step.skill}</h4>
                             <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">${step.timeline}</span>
                         </div>
                         <p class="text-gray-700 mb-3">${step.action}</p>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-wrap gap-2 mb-3">
                             ${step.resources.map(r => `<span class="bg-white border border-gray-300 px-3 py-1 rounded-lg text-sm"><i class="fas fa-book text-gray-800"></i> ${r}</span>`).join('')}
+                        </div>
+                        <div class="flex items-center gap-2 text-blue-600 font-semibold text-sm">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>Click to see detailed weekly breakdown</span>
                         </div>
                     </div>
                 </div>
@@ -483,6 +718,162 @@
             setTimeout(() => {
                 document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
             }, 100);
+        }
+
+        async function showLearningDetail(stepIndex) {
+            const step = currentLearningPath[stepIndex];
+
+            // Populate detail view with basic info
+            document.getElementById('detailStepNumber').textContent = step.step;
+            document.getElementById('detailSkillName').textContent = step.skill;
+            document.getElementById('detailTimeline').textContent = step.timeline;
+            document.getElementById('detailAction').textContent = step.action;
+
+            // Resources
+            document.getElementById('detailResources').innerHTML = step.resources.map((resource, i) => `
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-4">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">
+                            ${i + 1}
+                        </div>
+                        <h4 class="font-bold text-gray-800">${resource}</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 ml-13">Access this resource to build your skills in ${step.skill}</p>
+                </div>
+            `).join('');
+
+            // Call backend to get detailed weekly breakdown
+            try {
+                const response = await fetch(`${API_URL}/learning-detail`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        skill: step.skill,
+                        timeline: step.timeline,
+                        action: step.action,
+                        resources: step.resources
+                    })
+                });
+
+                if (response.ok) {
+                    const detailData = await response.json();
+                    displayWeeklyBreakdown(detailData.weekly_plan);
+                    displaySuccessMetrics(detailData.success_metrics);
+                    displayGettingStarted(detailData.getting_started);
+                } else {
+                    // Fallback to generated content if backend doesn't have the endpoint yet
+                    generateFallbackDetails(step);
+                }
+            } catch (error) {
+                console.error('Error fetching detail:', error);
+                generateFallbackDetails(step);
+            }
+
+            // Hide roadmap, show detail view
+            document.getElementById('resultsCard').classList.add('hidden');
+            document.getElementById('detailedLearningView').classList.remove('hidden');
+            document.getElementById('detailedLearningView').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateFallbackDetails(step) {
+            // Parse timeline to get weeks
+            const timelineMatch = step.timeline.match(/(\d+)\s*(month|week)/i);
+            let weeks = 4;
+            if (timelineMatch) {
+                const num = parseInt(timelineMatch[1]);
+                const unit = timelineMatch[2].toLowerCase();
+                weeks = unit === 'month' ? num * 4 : num;
+            }
+
+            // Generate weekly breakdown
+            const weeklyPlan = [];
+            for (let i = 1; i <= weeks; i++) {
+                weeklyPlan.push({
+                    week: i,
+                    focus: `Week ${i} - ${step.skill} foundations and practical application`,
+                    activities: [
+                        `Study core concepts and principles`,
+                        `Complete hands-on exercises`,
+                        `Review and reflect on learning`
+                    ],
+                    deliverable: `Week ${i} checkpoint completed`
+                });
+            }
+
+            displayWeeklyBreakdown(weeklyPlan);
+
+            // Generate success metrics
+            const successMetrics = [
+                'Complete all assigned learning resources',
+                'Achieve 80% or higher on knowledge assessments',
+                'Apply learned skills to a PSA project',
+                'Receive positive feedback from mentor or manager'
+            ];
+            displaySuccessMetrics(successMetrics);
+
+            // Generate getting started
+            const gettingStarted = [
+                'Enroll in the recommended courses within the first week',
+                'Set up a dedicated study schedule (2-3 hours per week)',
+                'Connect with a mentor or peer who has this skill',
+                'Identify a PSA project where you can apply this learning'
+            ];
+            displayGettingStarted(gettingStarted);
+        }
+
+        function displayWeeklyBreakdown(weeklyPlan) {
+            document.getElementById('weeklyBreakdown').innerHTML = weeklyPlan.map(week => `
+                <div class="border-l-4 border-purple-500 bg-purple-50 rounded-lg p-6 week-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
+                            ${week.week}
+                        </div>
+                        <h4 class="text-xl font-bold text-black">${week.focus}</h4>
+                    </div>
+                    <div class="ml-15">
+                        <p class="text-sm font-semibold text-black mb-2">Key Activities:</p>
+                        <ul class="space-y-1 mb-3">
+                            ${week.activities.map(activity => `
+                                <li class="text-black flex items-start gap-2">
+                                    <i class="fas fa-check-circle text-purple-600 mt-1"></i>
+                                    <span>${activity}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        <div class="bg-white border border-purple-200 rounded-lg p-3 mt-3">
+                            <p class="text-sm font-semibold text-purple-700">
+                                <i class="fas fa-flag-checkered"></i> Deliverable: ${week.deliverable}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displaySuccessMetrics(metrics) {
+            document.getElementById('successMetrics').innerHTML = metrics.map((metric, i) => `
+                <div class="flex items-start gap-3 bg-white border-l-4 border-green-500 p-4 rounded-lg shadow">
+                    <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+                        ${i + 1}
+                    </div>
+                    <p class="text-gray-700">${metric}</p>
+                </div>
+            `).join('');
+        }
+
+        function displayGettingStarted(steps) {
+            document.getElementById('gettingStarted').innerHTML = steps.map((step, i) => `
+                <div class="flex items-start gap-3 bg-white border-l-4 border-orange-500 p-4 rounded-lg shadow">
+                    <i class="fas fa-star text-orange-600 text-xl mt-1"></i>
+                    <p class="text-gray-700">${step}</p>
+                </div>
+            `).join('');
+        }
+
+        function backToRoadmap() {
+            document.getElementById('detailedLearningView').classList.add('hidden');
+            document.getElementById('resultsCard').classList.remove('hidden');
+            document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
         }
 
         loadEmployees();
