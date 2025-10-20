@@ -945,6 +945,87 @@
             </div>
         </div>
     </div>
+<!-- SkillsMatch Modal -->
+    <div id="skillsMatchModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-fire text-3xl"></i>
+                        <h2 class="text-3xl font-bold">SkillsMatch</h2>
+                    </div>
+                    <button onclick="closeSkillsMatch()" class="text-white hover:text-gray-200 text-3xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="text-purple-100 mt-2">Discover opportunities matched to your profile</p>
+            </div>
+
+            <!-- Card Container -->
+            <div class="relative h-[500px] bg-gray-50">
+                <div id="cardStack" class="absolute inset-0 flex items-center justify-center p-8">
+                    <!-- Cards will be inserted here by JavaScript -->
+                </div>
+
+                <!-- No More Cards Message -->
+                <div id="noMoreCards" class="hidden absolute inset-0 flex flex-col items-center justify-center p-8">
+                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">All Caught Up!</h3>
+                    <p class="text-gray-600 text-center mb-6">You've reviewed all available opportunities</p>
+                    <button onclick="closeSkillsMatch()" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="bg-gray-100 p-6 border-t-2 border-gray-200">
+                <div class="flex items-center justify-center gap-8 text-sm">
+                    <div class="flex items-center gap-2 text-gray-600">
+                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <span>Drag Left: Not Interested</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-600">
+                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Drag Right: Interested</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- High Compatibility Popup -->
+    <div id="highCompatPopup" class="hidden fixed inset-0 bg-black bg-opacity-75 z-[60] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center">
+            <div class="text-6xl mb-4">🎯</div>
+            <h3 class="text-3xl font-bold text-gray-800 mb-2">Highly Compatible!</h3>
+            <p class="text-xl text-gray-600 mb-4">You're <span id="compatScore" class="font-bold text-purple-600">92%</span> ready for this opportunity!</p>
+            
+            <div class="bg-purple-50 rounded-xl p-4 mb-6 text-left">
+                <p class="font-bold text-red-600 mb-2 flex items-center gap-2 text-lg">
+                    ‼️ Missing Skills:
+                </p>
+                <ul id="missingSkills" class="space-y-1 text-sm text-gray-600">
+                    <!-- Will be populated by JavaScript -->
+                </ul>
+                <p class="text-sm text-purple-600 font-semibold mt-3">
+                    Estimated Learning Time: <span id="learningTime">4 weeks</span>
+                </p>
+            </div>
+
+            <button onclick="generatePathFromMatch()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl text-lg font-bold hover:from-purple-700 hover:to-pink-700 transition shadow-lg mb-3">
+                <i class="fas fa-rocket"></i> Generate Learning Path
+            </button>
+            <button onclick="closeHighCompatPopup()" class="w-full bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
+                Continue Browsing
+            </button>
+        </div>
+    </div>
 
     <script>
         const API_URL = 'http://localhost:5001/api';
@@ -952,6 +1033,65 @@
         let currentLearningPath = null;
         let selectedOpportunity = null;
         let selectedSkill = null;
+        let currentCardIndex = 0;
+        let opportunities = [
+            {
+                id: 1,
+                title: "Tuas Port Automation - NextGen Terminal",
+                compatibility: 92,
+                duration: "6 months",
+                team: "12 people",
+                impact: "High",
+                skills: [
+                    { name: "Cloud Architecture", has: true },
+                    { name: "IoT Systems", has: true },
+                    { name: "Edge Computing", has: false }
+                ],
+                description: "Lead the development of automated terminal systems for Tuas Port Phase 2. Work with cutting-edge IoT and cloud technologies."
+            },
+            {
+                id: 2,
+                title: "PORTNET 2.0 Modernization Initiative",
+                compatibility: 78,
+                duration: "4 months",
+                team: "8 people",
+                impact: "Medium",
+                skills: [
+                    { name: "API Design", has: true },
+                    { name: "Microservices", has: false },
+                    { name: "DevOps", has: false }
+                ],
+                description: "Modernize PSA's port community system with microservices architecture and API-first design."
+            },
+            {
+                id: 3,
+                title: "Digital Transformation - AI/ML Integration",
+                compatibility: 85,
+                duration: "5 months",
+                team: "10 people",
+                impact: "High",
+                skills: [
+                    { name: "Machine Learning", has: false },
+                    { name: "Data Analytics", has: true },
+                    { name: "Python", has: true }
+                ],
+                description: "Drive digital innovation across PSA operations by implementing AI/ML solutions and data analytics platforms."
+            },
+            {
+                id: 4,
+                title: "Cybersecurity Infrastructure Uplift",
+                compatibility: 45,
+                duration: "3 months",
+                team: "6 people",
+                impact: "High",
+                skills: [
+                    { name: "Network Security", has: false },
+                    { name: "Threat Analysis", has: false },
+                    { name: "Risk Management", has: false }
+                ],
+                description: "Strengthen PSA's cybersecurity posture across all global terminals with zero-trust architecture."
+            }
+        ];
 
         // Mock opportunities data
         const opportunitiesData = {
@@ -1106,6 +1246,176 @@
                 handleFileSelect({ target: { files: [file] } });
             }
         });
+
+// SkillsMatch Functions
+        function openSkillsMatch() {
+            if (!currentEmployee) {
+                alert('Please select an employee first');
+                return;
+            }
+            
+            currentCardIndex = 0;
+            document.getElementById('skillsMatchModal').classList.remove('hidden');
+            document.getElementById('noMoreCards').classList.add('hidden');
+            renderCard();
+        }
+
+        function closeSkillsMatch() {
+            document.getElementById('skillsMatchModal').classList.add('hidden');
+        }
+
+        function renderCard() {
+            const cardStack = document.getElementById('cardStack');
+            
+            if (currentCardIndex >= opportunities.length) {
+                cardStack.innerHTML = '';
+                document.getElementById('noMoreCards').classList.remove('hidden');
+                return;
+            }
+
+            const opp = opportunities[currentCardIndex];
+            const compatColor = opp.compatibility >= 90 ? 'text-green-600' : opp.compatibility >= 70 ? 'text-yellow-600' : 'text-orange-600';
+            
+            cardStack.innerHTML = `
+                <div id="currentCard" class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 cursor-grab active:cursor-grabbing transition-transform border-4 border-transparent">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-4xl font-bold ${compatColor}">${opp.compatibility}%</span>
+                        <div class="text-right">
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold">
+                                ${opp.duration}
+                            </span>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">${opp.title}</h3>
+                    <p class="text-gray-600 mb-4">${opp.description}</p>
+
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800 mb-2">Skills Required:</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${opp.skills.map(skill => `
+                                <span class="px-3 py-1 rounded-full text-sm font-semibold ${skill.has ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">
+                                    ${skill.has ? '✓' : '⚠'} ${skill.name}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-sm text-gray-600">
+                        <span><i class="fas fa-users"></i> ${opp.team}</span>
+                        <span><i class="fas fa-chart-line"></i> ${opp.impact} Impact</span>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t-2 border-gray-200 text-center text-sm text-gray-500">
+                        👈 Drag left to pass • Drag right if interested 👉
+                    </div>
+                </div>
+            `;
+
+            setupCardDrag();
+        }
+
+        function setupCardDrag() {
+            const card = document.getElementById('currentCard');
+            if (!card) return;
+            
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+
+            card.addEventListener('mousedown', dragStart);
+            card.addEventListener('touchstart', dragStart);
+
+            function dragStart(e) {
+                isDragging = true;
+                startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+                card.style.transition = 'none';
+
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('touchmove', drag);
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchend', dragEnd);
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                
+                e.preventDefault();
+                currentX = (e.type === 'mousemove' ? e.clientX : e.touches[0].clientX) - startX;
+                const rotation = currentX / 20;
+                
+                card.style.transform = `translateX(${currentX}px) rotate(${rotation}deg)`;
+                
+                if (currentX > 50) {
+                    card.style.borderColor = '#10b981';
+                } else if (currentX < -50) {
+                    card.style.borderColor = '#ef4444';
+                } else {
+                    card.style.borderColor = 'transparent';
+                }
+            }
+
+            function dragEnd() {
+                isDragging = false;
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('touchmove', drag);
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchend', dragEnd);
+
+                if (Math.abs(currentX) > 100) {
+                    const direction = currentX > 0 ? 'right' : 'left';
+                    card.style.transition = 'transform 0.3s ease';
+                    card.style.transform = `translateX(${currentX > 0 ? 1000 : -1000}px) rotate(${currentX > 0 ? 45 : -45}deg)`;
+                    
+                    setTimeout(() => {
+                        handleSwipe(direction);
+                    }, 300);
+                } else {
+                    card.style.transition = 'transform 0.3s ease';
+                    card.style.transform = 'translateX(0) rotate(0)';
+                    card.style.borderColor = 'transparent';
+                }
+            }
+        }
+
+        function handleSwipe(direction) {
+            const opp = opportunities[currentCardIndex];
+            
+            if (direction === 'right' && opp.compatibility >= 90) {
+                showHighCompatPopup(opp);
+            } else {
+                currentCardIndex++;
+                renderCard();
+            }
+        }
+
+        function showHighCompatPopup(opp) {
+            document.getElementById('compatScore').textContent = opp.compatibility + '%';
+            
+            const missingSkills = opp.skills.filter(s => !s.has);
+            document.getElementById('missingSkills').innerHTML = missingSkills.map(skill => 
+                `<li class="flex items-center gap-2"><i class="fas fa-arrow-right text-purple-600"></i> ${skill.name}</li>`
+            ).join('');
+            
+            document.getElementById('learningTime').textContent = '4-6 weeks';
+            document.getElementById('highCompatPopup').classList.remove('hidden');
+        }
+
+        function closeHighCompatPopup() {
+            document.getElementById('highCompatPopup').classList.add('hidden');
+            currentCardIndex++;
+            renderCard();
+        }
+
+        function generatePathFromMatch() {
+            const opp = opportunities[currentCardIndex];
+            
+            document.getElementById('highCompatPopup').classList.add('hidden');
+            document.getElementById('skillsMatchModal').classList.add('hidden');
+            
+            document.getElementById('targetRole').value = opp.title;
+            analyzeCareer();
+        }
 
         // Load Employees
         async function loadEmployees() {
